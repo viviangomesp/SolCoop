@@ -39,14 +39,28 @@ public class SunShare extends Usuario {
     
     public void entradaDados () {
         Scanner sc = new Scanner(System.in);
+        boolean compartilharEnergia = false;//variavel local para capturar se o usuario já compartilha energia
+
         System.out.println("/// Cadastro de novo item no Mercado de Energia ///");
         System.out.println("Aqui você cadastra todos os dados da sua geração de energia solar!");
-        System.out.println("Digite o total de energia que você gera: ");
+
+        System.out.println("Digite o total de energia que você gera (em kWh): ");
         setEnergiaTotal(energiaTotal = sc.nextFloat());
-        System.out.println("Digite a energia que você já compartilha (se houver): ");
-        setEnergiaCompartilhada(energiaCompartilhada = sc.nextFloat());
-        System.out.println("Digite a energia disponivel para a venda: ");
+
+        System.out.println("Digite a energia que você já compartilha (S/N): ");
+        compartilharEnergia = sc.next().equalsIgnoreCase("S");
+        if (compartilharEnergia) {
+            System.out.println("Digite a energia que você compartilha (em kWh): ");
+            setEnergiaCompartilhada(energiaCompartilhada = sc.nextFloat());
+        } else {
+            System.out.println("Você não compartilha energia.");
+            setEnergiaCompartilhada(energiaCompartilhada = 0);
+        }
+
+        System.out.println("Digite a energia disponivel para a venda (em kWh): ");
         setEnergiaDisponivel(energiaDisponivel = sc.nextFloat());
+
+        sc.close();
     }
 
     public void imprimirShare () {
@@ -57,25 +71,33 @@ public class SunShare extends Usuario {
     }
 
     public void verificarMercado() {
+        Scanner sc = new Scanner(System.in);
+        boolean confirmaMercado = false;
         System.out.println("/// Verificação do Mercado de Energia ///");
         System.out.println("Por favor, confirme se todos os dados estão corretos:");
+
         imprimirShare();
+
         System.out.println("Você está ciente de que esses dados serão enviados para o Mercado de Energia, deseja continuar? (S/N)");
-
-        Scanner scanner = new Scanner(System.in);
-        String resposta = scanner.nextLine(); //Criando a variável local para resposta do usuário
-
-        if (resposta.equalsIgnoreCase("S")) {
-            // Enviar os dados para o Mercado de Energia
-            System.out.println("Dados enviados para o Mercado de Energia.");
-            ////////// Aqui você pode chamar um método que envia os dados para o Mercado de Energia/////////
+        confirmaMercado = sc.next().equalsIgnoreCase("S");
+        if (confirmaMercado) {
+            System.out.println("Dados enviados com sucesso!");
+            /// Aqui vai o código para enviar os dados para o Mercado de Energia///
         } else {
             System.out.println("Operação cancelada.");
+            System.out.println("Por favor, digite novamente os dados.");
+            entradaDados();
         }
+        sc.close();
+    }
+
+    public void importarPrecoVenda() {
+        // Aqui vai o código para importar o metodo que cuida do preço de custo da energia do seeker //  
+        // Importa a mediaConsumo + 15% //
     }
 
     public static void main(String[] args) {
-        SunShare share1 = new SunShare();
+        SunShare share1 = new SunShare("nome", "email", "senha", "numeroTelefone", "endereco");
         share1.entradaDados();
         share1.verificarMercado();
     }

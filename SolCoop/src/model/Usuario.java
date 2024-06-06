@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Scanner;
 public class Usuario {
     
     private String nome; //variaveis protegidas
@@ -56,6 +57,22 @@ public class Usuario {
         this.endereco = endereco;
     }
 
-
+    public void entradaDadosUsuario () {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("/// Cadastro de novo Usuário ///");
+        System.out.println("Digite o nome do usuário: ");
+        setNome(nome = sc.next());
+        System.out.println("Digite o email do usuário: ");
+        setEmail(email = sc.next());
+        System.out.println("Digite a senha do usuário: ");
+        setSenha(senha = sc.next());
+        System.out.println("Digite o número de telefone do usuário: ");
+        setNumeroTelefone(numeroTelefone = sc.next());
+        System.out.println("Digite o endereço do usuário: ");
+        setEndereco(endereco = sc.next());
+    }
     
+    public static void main(String[] args) {
+        Usuario usuario1 = new Usuario("nome", "email", "senha", "numeroTelefone", "endereco");
+    }
 }
