@@ -14,6 +14,7 @@ public class SunSeeker extends Usuario{
         protected float energiaDesejada;
         public float valorTributo;
         protected List<Float> ultimasContas;
+        public float margemErro = .15f; // 15% de margem de erro
 
         //*INICIO DOS SET E GETS DO SunSeeker *//
         /* SET da energia desejada */
@@ -57,9 +58,12 @@ public class SunSeeker extends Usuario{
             }
             return soma/ultimasContas.size();
         }
+        public float consumoTotal(){
+            return calcularMediaConsumo() + margemErro;
+        }
         /* Metodo para calcular o valor da conta de energia */
-        public float calcularPreco(float mediaConsumo){
-            return calcularMediaConsumo() * valorTributo;
+        public float calcularPrecoFinal(float mediaConsumo){
+            return consumoTotal() * valorTributo;
         }
 
         /* Metodo para adicionar uma conta a lista de contas */
@@ -88,7 +92,7 @@ public class SunSeeker extends Usuario{
         sunSeeker.recolherTributo();
         sunSeeker.adicionarConta();
         System.out.printf("A media de consumo é: %.2f kWh\n", sunSeeker.calcularMediaConsumo());
-        System.out.printf("O preço da energia é: R$ %.2f\n", sunSeeker.calcularPreco(0) );  
+        System.out.printf("O preço da energia é: R$ %.2f\n", sunSeeker.calcularPrecoFinal(0) );  
 
     }
         
