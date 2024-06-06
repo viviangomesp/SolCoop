@@ -37,7 +37,7 @@ public class SunShare extends Usuario {
     }
         
     
-    public void entradaDados () {
+    public void entradaDados () {//scanner
         System.out.println("/// Cadastro de novo item no Mercado de Energia ///");
         System.out.println("Aqui você cadastra todos os dados da sua geração de energia solar!");
         System.out.println("Digite o total de energia que você gera: " + getEnergiaTotal());
@@ -56,7 +56,7 @@ public class SunShare extends Usuario {
         System.out.println("/// Verificação do Mercado de Energia ///");
         System.out.println("Por favor, confirme se todos os dados estão corretos:");
         imprimirShare();
-        System.out.println("Você está ciente de que esses dados serão enviados para o Mercado de Energia? (S/N)");
+        System.out.println("Você está ciente de que esses dados serão enviados para o Mercado de Energia, deseja continuar? (S/N)");
 
         Scanner scanner = new Scanner(System.in);
         String resposta = scanner.nextLine();
