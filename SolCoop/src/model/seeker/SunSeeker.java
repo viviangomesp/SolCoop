@@ -21,7 +21,7 @@ public class SunSeeker extends Usuario{
         public void setEnergiaDesejada(float energiaDesejada) {
             this.energiaDesejada = energiaDesejada;
         }
-
+        
         /* GET da energia desejada */
         public float getEnergiaDesejada() {
             return energiaDesejada;
@@ -46,7 +46,6 @@ public class SunSeeker extends Usuario{
         public List<Float> getUltimasContas() {
             return ultimasContas;
         }
-
         //*FIM DOS SET E GETS DO SunSeeker *//
 
         //*Inicio dos metodos para calcular o preço da energioa *//
@@ -58,9 +57,12 @@ public class SunSeeker extends Usuario{
             }
             return soma/ultimasContas.size();
         }
+        
+        /* Metodo para calcular o consumo total de energia (add margem de erro)*/
         public float consumoTotal(){
             return calcularMediaConsumo() + margemErro;
         }
+        
         /* Metodo para calcular o valor da conta de energia */
         public float calcularPrecoFinal(float mediaConsumo){
             return consumoTotal() * valorTributo;
@@ -75,16 +77,19 @@ public class SunSeeker extends Usuario{
         //*Inicio dos metodos para interagir com o SunSeeker *//
         /*Metodo para recolher o valor do tributo da energia */
         public void recolherTributo(){
-            System.out.println("Primeiro informe o valor do tributo da energia: " );
+            System.out.println("Primeiro informe o valor do tributo da energia da sua região\nExemplo: 0.50 (R$/kWh)");
+            System.out.println("Esse valor será adicionado ao valor final a ser pago.");
+            System.out.println("Informe o valor do tributo: ");
             setValorTributo(sc.nextFloat());
         }
         /* Metodo para adicionar uma conta a lista de contas */
         public void adicionarConta(){
+            System.out.println("/// Adicionar contas para calculo da media ///");
+            System.out.println("///O valor do consumo de energia é calculado em kWh (quilowatt-hora) e sera usado para calcular sua media de consumo.///");
             for (int i = 1; i <= 12; i++) {
                 System.out.println("Informe o valor da conta [" + i + "] (em kWh): ");
                 float conta = sc.nextFloat();
                 ultimasContas.add(conta);
-            
             }        
         }
     public static void main(String[] args) {
@@ -92,7 +97,7 @@ public class SunSeeker extends Usuario{
         sunSeeker.recolherTributo();
         sunSeeker.adicionarConta();
         System.out.printf("A media de consumo é: %.2f kWh\n", sunSeeker.calcularMediaConsumo());
-        System.out.printf("O preço da energia é: R$ %.2f\n", sunSeeker.calcularPrecoFinal(0) );  
+        System.out.printf("O preço final da energia com os 15% margem de seguranca: R$ %.2f\n", sunSeeker.calcularPrecoFinal(0) );  
 
     }
         
