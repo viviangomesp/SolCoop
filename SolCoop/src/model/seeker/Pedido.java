@@ -1,8 +1,7 @@
-package model.pedido;
+package model.seeker;
 // Importações de classes que acho que vá precisar
 import model.Usuario;
 import model.partner.*;
-import model.seeker.*;
 import model.share.*;
 
 import java.util.ArrayList;
@@ -91,9 +90,9 @@ public class Pedido{
     //* FIM DOS SETS E GETS *//
     
     /* Método para criar um pedido */
-    public void criarPedido(){
+    public void criarPedido(){//Aqui deveria puxar do seeker a nova compra de energia e do share a venda de energia e preencheria automaticamente
         Pedido pedido = new Pedido(0, "", "", 0, "", 0);
-        System.out.println("///////////////////////// CRIAR PEDIDO //////////////////////////");
+        System.out.println("/// CRIAR PEDIDO ///");
         System.out.println("Informe o numero do pedido: ");
         pedido.setNumPedido(sc.nextInt());
         System.out.println("Informe a data de criação do pedido: ");
@@ -120,7 +119,7 @@ public class Pedido{
                     // Precisa do camninho para o pagamento AQUI
                     break; // por enquanto que não temos o caminho para o pagamento
 
-                } else if (resp.equalsIgnoreCase("n")) {/* Confirmando que deseja cancer e excluir o pedido */
+                } else if (resp.equalsIgnoreCase("n")) {/* Confirmando que deseja cancelar e excluir o pedido */
                     System.out.println("Você tem certeza de que deseja cancelar e excluir o pedido? (s/n)");
                     resp = sc.next();
         

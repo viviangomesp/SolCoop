@@ -5,13 +5,37 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SunPartner {
-     private String cep;
+    private String cep;
     private List<Float> ultimasContas;
     private List<String> empresasEscolhidas;
 
     public SunPartner(String cep, List<Float> ultimasContas, List<String> empresasEscolhidas) {
         this.cep = cep;
         this.ultimasContas = ultimasContas;
+        this.empresasEscolhidas = empresasEscolhidas;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public List<Float> getUltimasContas() {
+        return ultimasContas;
+    }
+
+    public void setUltimasContas(List<Float> ultimasContas) {
+        this.ultimasContas = ultimasContas;
+    }
+
+    public List<String> getEmpresasEscolhidas() {
+        return empresasEscolhidas;
+    }
+
+    public void setEmpresasEscolhidas(List<String> empresasEscolhidas) {
         this.empresasEscolhidas = empresasEscolhidas;
     }
 
@@ -65,7 +89,7 @@ public class SunPartner {
 
         System.out.println("Média das últimas 12 contas de energia: " + mediaContas);
         System.out.println("Média com margem de segurança de 15%: " + mediaComMargemSeguranca);
-        System.out.println("Essa é uma margem de segurança para garantir que não haja queda de energia.");
+        System.out.println("A margem de segurança é importante para que o seu consumo seja sempre atendido com energia limpa.");
 
         List<String> empresasEscolhidas = new ArrayList<>();
         System.out.println("Insira a empresa escolhida:");

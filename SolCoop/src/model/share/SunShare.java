@@ -1,6 +1,8 @@
 package model.share;
 
 import model.Usuario;
+import model.seeker.SunSeeker;
+
 import java.util.Scanner;
 
 public class SunShare extends Usuario {
@@ -8,8 +10,8 @@ public class SunShare extends Usuario {
     protected float energiaCompartilhada;
     protected float energiaTotal;
 
-    public SunShare(String nome, String email, String senha, String numeroTelefone, String endereco) {
-        super(nome, email, senha, numeroTelefone, endereco);
+    public SunShare(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
+        super(idUsuario, nome, email, senha, numeroTelefone, endereco);
     }
 
     public float getEnergiaDisponivel() {
@@ -47,7 +49,7 @@ public class SunShare extends Usuario {
         System.out.println("Digite o total de energia que você gera (em kWh): ");
         setEnergiaTotal(energiaTotal = sc.nextFloat());
 
-        System.out.println("Digite a energia que você já compartilha (S/N): ");
+        System.out.println("Você já compartilha eneriga? (S/N): ");
         compartilharEnergia = sc.next().equalsIgnoreCase("S");
         if (compartilharEnergia) {
             System.out.println("Digite a energia que você compartilha (em kWh): ");
@@ -60,7 +62,6 @@ public class SunShare extends Usuario {
         System.out.println("Digite a energia disponivel para a venda (em kWh): ");
         setEnergiaDisponivel(energiaDisponivel = sc.nextFloat());
 
-        sc.close();
     }
 
     public void imprimirShare () {
@@ -82,7 +83,7 @@ public class SunShare extends Usuario {
         confirmaMercado = sc.next().equalsIgnoreCase("S");
         if (confirmaMercado) {
             System.out.println("Dados enviados com sucesso!");
-            /// Aqui vai o código para enviar os dados para o Mercado de Energia///
+            
         } else {
             System.out.println("Operação cancelada.");
             System.out.println("Por favor, digite novamente os dados.");
@@ -92,14 +93,17 @@ public class SunShare extends Usuario {
     }
 
     public void importarPrecoVenda() {
-        // Aqui vai o código para importar o metodo que cuida do preço de custo da energia do seeker //  
-        // Importa a mediaConsumo + 15% //
+        SunSeeker seeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", "endereco");
+        float consumoSeeker = seeker.consumoTotal();
+        System.out.println("O preço de venda da energia é: " + consumoSeeker);
     }
 
     public static void main(String[] args) {
-        SunShare share1 = new SunShare("nome", "email", "senha", "numeroTelefone", "endereco");
+        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", "endereco");
         share1.entradaDados();
         share1.verificarMercado();
     }
+
+
 }
 

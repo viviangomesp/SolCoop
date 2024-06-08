@@ -3,18 +3,28 @@ package model;
 import java.util.Scanner;
 public class Usuario {
     
-    private String nome; //variáveis protegidas
+    private int idUsuario;
+    private String nome; //variaveis protegidas
     private String email;
     private String senha;
     private String numeroTelefone;
     private String endereco;
 
-    public Usuario(String nome, String email, String senha, String numeroTelefone, String endereco) {
+    public Usuario(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
+        this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.numeroTelefone = numeroTelefone;
         this.endereco = endereco;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
@@ -73,6 +83,6 @@ public class Usuario {
     }
     
     public static void main(String[] args) {
-        Usuario usuario1 = new Usuario("nome", "email", "senha", "numeroTelefone", "endereco");
+        Usuario usuario1 = new Usuario(0, "nome", "email", "senha", "numeroTelefone", "endereco");
     }
 }
