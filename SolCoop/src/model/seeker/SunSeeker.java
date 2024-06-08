@@ -14,12 +14,22 @@ public class SunSeeker extends Usuario {
         this.ultimasContas = new ArrayList<>();
     }
 
-    protected float energiaDesejada;
-    public float valorTributo;
-    protected List<Float> ultimasContas;
+    private float mediaConsumo = 0;
+    private float energiaDesejada;
+    public float valorTributo = 0;
+    private List<Float> ultimasContas;
     public float margemErro = .15f; // 15% de margem de erro
 
     // *INICIO DOS SET E GETS DO SunSeeker *//
+    /* SET do id do usuario */
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    /* GET do id do usuario */
+    public int getIdUsuario() {
+        return idUsuario;
+    }
     /* SET da energia desejada */
     public void setEnergiaDesejada(float energiaDesejada) {
         this.energiaDesejada = energiaDesejada;
@@ -51,46 +61,35 @@ public class SunSeeker extends Usuario {
     }
     // *FIM DOS SET E GETS DO SunSeeker *//
 
-    // *Inicio dos metodos para calcular o preço da energioa *//
-    /* Metodo para calcular a media de consumo das ultimas contas */
-    public float calcularMediaConsumo() {
-        float soma = 0;
-        for (Float conta : ultimasContas) {
-            soma += conta;
-        }
-        return soma / ultimasContas.size();
-    }
-
-    /* Metodo para calcular o consumo total de energia (add margem de erro) */
-    public float consumoTotal() {
-        return calcularMediaConsumo() + margemErro;
-    }
-
-    /* Metodo para calcular o valor da conta de energia */
-    public float calcularPrecoFinal(float mediaConsumo) {
-        return consumoTotal() * valorTributo;
-    }
-
-    /* Metodo para adicionar uma conta a lista de contas */
-    public void adicionarConta(float conta) {
+    /* Método para calcular quanto o Seeker vai pagar com adição de 15% de margem de erro e o valor do tributo local */
+    public float PrecoFinalSeeker(float conta) {
+        float consumoTotal = 0;
+        /* Adicionar uma conta a lista de contas */
         ultimasContas.add(conta);
+    
+        /* Calcular a média de consumo */
+        float soma = 0;
+        for (Float valorConta : ultimasContas) {
+            soma += valorConta;
+        }
+        mediaConsumo = soma / ultimasContas.size();
+    
+        /* Calcular o consumo total de energia (add margem de erro) */
+        consumoTotal = mediaConsumo + (mediaConsumo * margemErro);
+    
+        /* Calcular o valor da conta de energia */ 
+        return consumoTotal * valorTributo;
     }
-    // *Fim dos metodos para calcular o preço da energioa *//
 
-    // *Inicio dos metodos para interagir com o SunSeeker *//
-    /* Metodo para recolher o valor do tributo da energia */
-    public void recolherTributo() {
+    /* Método para recolher o valor do tributo da energia */
+    public void ColetandoDados() {
         System.out.println("Primeiro informe o valor do tributo da energia da sua região\nExemplo: 0.50 (R$/kWh)");
         System.out.println("Esse valor será adicionado ao valor final a ser pago.");
         System.out.println("Informe o valor do tributo: ");
         setValorTributo(sc.nextFloat());
-    }
-
-    /* Metodo para adicionar uma conta a lista de contas */
-    public void adicionarConta() {
+        /* Pedindo as ultimas contas para realização dos cálculos  */
         System.out.println("/// Adicionar contas para calculo da media ///");
-        System.out.println(
-                "///O valor do consumo de energia é calculado em kWh (quilowatt-hora) e sera usado para calcular sua media de consumo.///");
+        System.out.println("///O valor do consumo de energia é calculado em kWh (quilowatt-hora) e sera usado para calcular sua media de consumo.///");
         for (int i = 1; i <= 12; i++) {
             System.out.println("Informe o valor da conta [" + i + "] (em kWh): ");
             float conta = sc.nextFloat();
@@ -98,14 +97,18 @@ public class SunSeeker extends Usuario {
         }
     }
 
+    /* Método para imprimir o valor a ser pago pelo seeker */
+    public void PrintValorFinal(){
+        PrecoFinalSeeker(0.0f); // Chamando o método para atualizar as variáveis
+        System.out.printf("A media de consumo é: %.2f kWh\n", mediaConsumo);
+        System.out.printf("O preço final da energia com os 15%% margem de seguranca: R$ %.2f\n", PrecoFinalSeeker(0.0f));
+    }
+
     public static void main(String[] args) {
         SunSeeker sunSeeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", "endereco");
-        sunSeeker.recolherTributo();
-        sunSeeker.adicionarConta();
-        System.out.printf("A media de consumo é: %.2f kWh\n", sunSeeker.calcularMediaConsumo());
-        System.out.printf("O preço final da energia com os 15% margem de seguranca: R$ %.2f\n",
-                sunSeeker.calcularPrecoFinal(0));
-
+        sunSeeker.ColetandoDados();
+        sunSeeker.PrintValorFinal();
+       
     }
 
 }

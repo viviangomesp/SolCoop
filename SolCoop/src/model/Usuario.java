@@ -5,7 +5,7 @@ import java.util.Scanner;
 import model.share.SunShare;
 public class Usuario {
     
-    private int idUsuario;
+    protected int idUsuario;
     private String nome; //variaveis protegidas
     private String email;
     private String senha;
