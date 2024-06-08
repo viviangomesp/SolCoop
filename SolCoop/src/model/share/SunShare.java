@@ -43,13 +43,12 @@ public class SunShare extends Usuario {
         Scanner sc = new Scanner(System.in);
         boolean compartilharEnergia = false;//variavel local para capturar se o usuario já compartilha energia
 
-        System.out.println("/// Cadastro de novo item no Mercado de Energia ///");
-        System.out.println("Aqui você cadastra todos os dados da sua geração de energia solar!");
+        System.out.println("\n/// Cadastro de novo item no Mercado de Energia ///");
 
         System.out.println("Digite o total de energia que você gera (em kWh): ");
         setEnergiaTotal(energiaTotal = sc.nextFloat());
 
-        System.out.println("Você já compartilha eneriga? (S/N): ");
+        System.out.println("\nVocê já compartilha eneriga? (S/N): ");
         compartilharEnergia = sc.next().equalsIgnoreCase("S");
         if (compartilharEnergia) {
             System.out.println("Digite a energia que você compartilha (em kWh): ");
@@ -59,13 +58,13 @@ public class SunShare extends Usuario {
             setEnergiaCompartilhada(energiaCompartilhada = 0);
         }
 
-        System.out.println("Digite a energia disponivel para a venda (em kWh): ");
+        System.out.println("\nDigite a energia disponivel para a venda (em kWh): ");
         setEnergiaDisponivel(energiaDisponivel = sc.nextFloat());
 
     }
 
     public void imprimirShare () {
-        System.out.println("/// Confira os dados cadastrados abaixo ///");
+        System.out.println("\n/// Confira os dados cadastrados abaixo ///");
         System.out.println("Energia total: " + getEnergiaTotal());
         System.out.println("Energia compartilhada: " + getEnergiaCompartilhada());
         System.out.println("Energia disponível: " + getEnergiaDisponivel());
@@ -74,7 +73,7 @@ public class SunShare extends Usuario {
     public void verificarMercado() {
         Scanner sc = new Scanner(System.in);
         boolean confirmaMercado = false;
-        System.out.println("/// Verificação do Mercado de Energia ///");
+        System.out.println("\n\n/// Verificação do Mercado de Energia ///");
         System.out.println("Por favor, confirme se todos os dados estão corretos:");
 
         imprimirShare();
@@ -103,7 +102,6 @@ public class SunShare extends Usuario {
         share1.entradaDados();
         share1.verificarMercado();
     }
-
 
 }
 
