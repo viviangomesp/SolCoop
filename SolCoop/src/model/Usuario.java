@@ -3,7 +3,7 @@ package model;
 import java.util.Scanner;
 public class Usuario {
     
-    private String nome; //variaveis protegidas
+    private String nome; //variáveis protegidas
     private String email;
     private String senha;
     private String numeroTelefone;
