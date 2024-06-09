@@ -93,7 +93,7 @@ public class SunShare extends Usuario {
 
     public void importarPrecoVenda() {
         SunSeeker seeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", "endereco");
-        float consumoSeeker = seeker.consumoTotal();
+        float consumoSeeker = seeker.getMediaConsumo();
         System.out.println("O preço de venda da energia é: " + consumoSeeker);
     }
 

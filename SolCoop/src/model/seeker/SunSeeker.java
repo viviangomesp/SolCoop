@@ -19,6 +19,7 @@ public class SunSeeker extends Usuario {
     public float valorTributo = 0;
     private List<Float> ultimasContas;
     public float margemErro = .15f; // 15% de margem de erro
+    public float consumoTotal = 0;
 
     // *INICIO DOS SET E GETS DO SunSeeker *//
     /* SET do id do usuario */
@@ -59,11 +60,19 @@ public class SunSeeker extends Usuario {
     public List<Float> getUltimasContas() {
         return ultimasContas;
     }
+
+    public float getMediaConsumo() {
+        return mediaConsumo;
+    }
+
+    public void setMediaConsumo(float mediaConsumo) {
+        this.mediaConsumo = mediaConsumo;
+    }
+
     // *FIM DOS SET E GETS DO SunSeeker *//
 
     /* Método para calcular quanto o Seeker vai pagar com adição de 15% de margem de erro e o valor do tributo local */
     public float PrecoFinalSeeker(float conta) {
-        float consumoTotal = 0;
         /* Adicionar uma conta a lista de contas */
         ultimasContas.add(conta);
     
@@ -83,7 +92,7 @@ public class SunSeeker extends Usuario {
 
     /* Método para recolher o valor do tributo da energia */
     public void ColetandoDados() {
-        System.out.println("Primeiro informe o valor do tributo da energia da sua região\nExemplo: 0.50 (R$/kWh)");
+        System.out.println("Primeiro informe o valor do tributo da energia da sua região\nExemplo: 0,50 (R$/kWh)");
         System.out.println("Esse valor será adicionado ao valor final a ser pago.");
         System.out.println("Informe o valor do tributo: ");
         setValorTributo(sc.nextFloat());
@@ -101,7 +110,7 @@ public class SunSeeker extends Usuario {
     public void PrintValorFinal(){
         PrecoFinalSeeker(0.0f); // Chamando o método para atualizar as variáveis
         System.out.printf("A media de consumo é: %.2f kWh\n", mediaConsumo);
-        System.out.printf("O preço final da energia com os 15%% margem de seguranca: R$ %.2f\n", PrecoFinalSeeker(0.0f));
+        System.out.printf("O preço final da energia com os 15% margem de seguranca: R$ %.2f\n", PrecoFinalSeeker(0.0f));
     }
 
     public static void main(String[] args) {

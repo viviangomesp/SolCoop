@@ -1,16 +1,21 @@
 package model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.seeker.SunSeeker;
 import model.share.SunShare;
+
 public class Usuario {
-    
-    protected int idUsuario;
-    private String nome; //variaveis protegidas
+
+    protected static int idUsuario;
+    private String nome; // variaveis protegidas
     private String email;
     private String senha;
     private String numeroTelefone;
     private String endereco;
+    private static List<Usuario> listaUsuarios = new ArrayList<>();
 
     public Usuario(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
         this.idUsuario = idUsuario;
@@ -69,36 +74,45 @@ public class Usuario {
         this.endereco = endereco;
     }
 
-    public static void menu () { //add id do usuario
+    public static void menu() { // add id do usuario
         Scanner sc = new Scanner(System.in);
         int opcao;
-        System.out.println("\nBem vindo ao SolCoop! Aqui você pode compartilhar e comprar energia solar!");
-        System.out.println("1 - Registar novo usuario");
-        System.out.println("2 - Listar ofertas de energia");
-        System.out.println("3 - Sair");
-        opcao = sc.nextInt();
 
-        switch (opcao) {
-            case 1:
-                registarNovoUsuario();
-                break;
-            case 2:
-                System.out.println("Listar ofertas de energia"); //add metodo depois
-                break;
-            case 3:
-                System.out.println("Sair");
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                System.out.println("Digite uma opção válida (1, 2 ou 3)");
-                opcao = sc.nextInt();
-                break;
+        while (true) {
+            System.out.println("\nBem vindo ao SolCoop! Aqui você pode compartilhar e comprar energia solar!");
+            System.out.println("1 - Registar novo usuario");
+            System.out.println("2 - Listar ofertas de energia");
+            System.out.println("3 - Listar todos usuarios");
+            System.out.println("4 - Sair");
+            opcao = sc.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    registarNovoUsuario();
+                    break;
+                case 2:
+                    System.out.println("Listar ofertas de energia"); // add metodo depois
+                    break;
+                case 3:
+                    System.out.println("Listar todos usuarios"); // add metodo depois
+                    break;
+                case 4:
+                    System.out.println("Saia do SolCoop! Até mais!");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+                    System.out.println("Digite uma opção válida (1, 2 ou 3)");
+                    opcao = sc.nextInt();
+                    break;
+            }
         }
     }
 
-    public static void registarNovoUsuario (){
+    public static void registarNovoUsuario() {
         Scanner sc = new Scanner(System.in);
         int tipoUsuario;
+        idUsuario++;
+
         System.out.println("\n\n/// Cadastro de novo usuário ///");
 
         System.out.println("Digite o nome do usuário: ");
@@ -109,7 +123,7 @@ public class Usuario {
 
         System.out.println("Digite a senha do usuário: ");
         String senha = sc.nextLine();
-        
+
         System.out.println("Digite o número de telefone do usuário: ");
         String numeroTelefone = sc.nextLine();
 
@@ -123,6 +137,8 @@ public class Usuario {
         System.out.println("3 - SunPartner - Usuário que gostaria de dividir uma nova compra junto a outro usuário de placa solar.");
         tipoUsuario = sc.nextInt();
 
+        Usuario usuario = null;//Se não for inicializado, o compilador não deixa compilar
+
         switch (tipoUsuario) {
             case 1:
                 System.out.println("\nVocê escolheu ser um SunShare!");
@@ -130,24 +146,31 @@ public class Usuario {
                 SunShare sunShare = new SunShare(0, nome, email, senha, numeroTelefone, endereco);
                 sunShare.entradaDados();
                 sunShare.verificarMercado();
+                listaUsuarios.add(usuario);
                 break;
+
             case 2:
                 System.out.println("Você escolheu ser um SunSeeker!");
-                //metodos do seeker
+                SunSeeker sunSeeker = new SunSeeker(0, nome, email, senha, numeroTelefone, endereco);
+                sunSeeker.ColetandoDados();
+                sunSeeker.PrintValorFinal();
+                listaUsuarios.add(usuario);
                 break;
             case 3:
                 System.out.println("Você escolheu ser um SunPartner!");
-                //metodos do partner
+                // metodos do partner
+                listaUsuarios.add(usuario);
                 break;
             default:
                 System.out.println("Opção inválida!");
+                System.out.println("Digite uma opção válida (1, 2 ou 3)");
+                tipoUsuario = sc.nextInt();
                 break;
         }
-        
+
     }
-    
     public static void main(String[] args) {
         Usuario usuario1 = new Usuario(0, "nome", "email", "senha", "numeroTelefone", "endereco");
-        usuario1.registarNovoUsuario();
+        menu();
     }
 }
