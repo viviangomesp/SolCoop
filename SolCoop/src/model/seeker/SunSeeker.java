@@ -92,13 +92,14 @@ public class SunSeeker extends Usuario {
 
     /* Método para recolher o valor do tributo da energia */
     public void ColetandoDados() {
-        System.out.println("Primeiro informe o valor do tributo da energia da sua região\nExemplo: 0,50 (R$/kWh)");
-        System.out.println("Esse valor será adicionado ao valor final a ser pago.");
+        System.out.println("/// Bem vindo ao SunSeeker\n Vamos comecar coletando algumas informacoes necessarias ///");
+        System.out.println("Primeiro informe o valor do tributo da energia da sua região (Deve aparecer em sua conta de energia)\nExemplo: 0,50 (R$/kWh)");
+        System.out.println("O valor do tributo será adicionado ao valor final a ser pago.");
         System.out.println("Informe o valor do tributo: ");
         setValorTributo(sc.nextFloat());
         /* Pedindo as ultimas contas para realização dos cálculos  */
-        System.out.println("/// Adicionar contas para calculo da media ///");
-        System.out.println("///O valor do consumo de energia é calculado em kWh (quilowatt-hora) e sera usado para calcular sua media de consumo.///");
+        System.out.println("/// Agora pediremos as ultimas 12 contas de energia para calcular sua media de consumo mensal///");
+        System.out.println("///Informar consumo de energia em kWh (quilowatt-hora) presente nas contas de energia que sera usado para calcular sua media de consumo.///");
         for (int i = 1; i <= 12; i++) {
             System.out.println("Informe o valor da conta [" + i + "] (em kWh): ");
             float conta = sc.nextFloat();
@@ -109,7 +110,7 @@ public class SunSeeker extends Usuario {
     /* Método para imprimir o valor a ser pago pelo seeker */
     public void PrintValorFinal(){
         PrecoFinalSeeker(0.0f); // Chamando o método para atualizar as variáveis
-        System.out.printf("A media de consumo é: %.2f kWh\n", mediaConsumo);
+        System.out.printf("Sua media de consumo mensal é: %.2f kWh\n", mediaConsumo);
         System.out.printf("O preço final da energia com os 15% margem de seguranca: R$ %.2f\n", PrecoFinalSeeker(0.0f));
     }
 
