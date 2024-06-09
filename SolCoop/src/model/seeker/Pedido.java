@@ -91,21 +91,6 @@ public class Pedido{
     
     /* Método para criar um pedido */
     public void criarPedido(){//Aqui deveria puxar do seeker a nova compra de energia e do share a venda de energia e preencheria automaticamente
-        Pedido pedido = new Pedido(0, "", "", 0, "", 0);
-        System.out.println("/// CRIAR PEDIDO ///");
-        System.out.println("Informe o numero do pedido: ");
-        pedido.setNumPedido(sc.nextInt());
-        System.out.println("Informe a data de criação do pedido: ");
-        pedido.setDataCriacao(sc.next());
-        System.out.println("Informe o nome do cliente Share: ");
-        pedido.setNomeClienteShare(sc.next());
-        System.out.println("Informe o numero do cliente Share: ");
-        pedido.setNumeroClienteShare(sc.nextInt());
-        System.out.println("Informe o nome do cliente Seeker: ");
-        pedido.setNomeClienteSeeker(sc.next());
-        System.out.println("Informe o numero do cliente Seeker: ");
-        pedido.setNumClienteSeeker(sc.nextInt());
-        listaPedidos.add(pedido);
     }
 
     /* Método para finalizar e/ou cancelar um pedido */
@@ -132,13 +117,6 @@ public class Pedido{
                     System.out.println("Resposta inválida. Por favor, responda com 's' para sim ou 'n' para não.");
                 }
         }while (true);
-    }
-
-    /* Método para listar os pedidos */
-    public static void main(String[] args) {
-        Pedido pedido = new Pedido(0, "", "", 0, "", 0);
-        pedido.criarPedido();
-        pedido.aprovarOuCancelarPedido(sc, pedido);
     }
 
 }
