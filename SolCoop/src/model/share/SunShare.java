@@ -9,9 +9,11 @@ public class SunShare extends Usuario {
     protected float energiaDisponivel;
     protected float energiaCompartilhada;
     protected float energiaTotal;
+    private MercadoEnergia mercado;
 
-    public SunShare(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
+    public SunShare(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco, MercadoEnergia mercado) {
         super(idUsuario, nome, email, senha, numeroTelefone, endereco);
+        this.mercado = mercado;
     }
 
     public float getEnergiaDisponivel() {
@@ -64,7 +66,7 @@ public class SunShare extends Usuario {
     }
 
     public void imprimirShare () {
-        System.out.println("\n/// Confira os dados cadastrados abaixo ///");
+        System.out.println("\nConfira os dados cadastrados abaixo:");
         System.out.println("Energia total: " + getEnergiaTotal());
         System.out.println("Energia compartilhada: " + getEnergiaCompartilhada());
         System.out.println("Energia disponível: " + getEnergiaDisponivel());
@@ -78,17 +80,19 @@ public class SunShare extends Usuario {
 
         imprimirShare();
 
-        System.out.println("Você está ciente de que esses dados serão enviados para o Mercado de Energia, deseja continuar? (S/N)");
+        System.out.println("\nVocê está ciente de que esses dados serão enviados para o Mercado de Energia, deseja continuar? (S/N)");
         confirmaMercado = sc.next().equalsIgnoreCase("S");
         if (confirmaMercado) {
             System.out.println("Dados enviados com sucesso!");
-            
+            mercado.addOferta(this);
+            mercado.adicionarOfertasTeste();
+            mercado.listarOfertas();
         } else {
             System.out.println("Operação cancelada.");
             System.out.println("Por favor, digite novamente os dados.");
             entradaDados();
+            verificarMercado();
         }
-        sc.close();
     }
 
     public void importarPrecoVenda() {
@@ -98,7 +102,8 @@ public class SunShare extends Usuario {
     }
 
     public static void main(String[] args) {
-        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", "endereco");
+        MercadoEnergia mercado = new MercadoEnergia();
+        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", "endereco", mercado);
         share1.entradaDados();
         share1.verificarMercado();
     }
