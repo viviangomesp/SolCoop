@@ -1,15 +1,19 @@
 package model.partner;
 
+import model.Endereco;
+import model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SunPartner {
+public class SunPartner extends Usuario{
+
     private String cep;
     private List<Float> ultimasContas;
     private List<String> empresasEscolhidas;
-
-    public SunPartner(String cep, List<Float> ultimasContas, List<String> empresasEscolhidas) {
+    
+    public SunPartner(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco, String cep, List<Float> ultimasContas, List<String> empresasEscolhidas) {
+        super(idUsuario, nome, email, senha, numeroTelefone, endereco);
         this.cep = cep;
         this.ultimasContas = ultimasContas;
         this.empresasEscolhidas = empresasEscolhidas;
@@ -45,17 +49,17 @@ public class SunPartner {
         System.out.println("CEP: " + cep);
         System.out.println("Quantidade de energia desejada (com margem de segurança de 15%): " + calcularMediaComMargemSeguranca(calcularMedia(ultimasContas)));
         System.out.println("Empresas escolhidas: " + empresasEscolhidas);
-        System.out.println("\nVamos encontrar um parceiro SolCoop para você. Entraremos em contato em breve!");
+        System.out.println("\nVamos encontrar um parceiro SolCoop para você. Entraremos em contato em breve!\n");
     }
 
     public static List<Float> solicitarUltimasContas() {
         List<Float> ultimasContas = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Insira as últimas 12 contas de energia:");
+        System.out.println("Aqui você pode solicitar um orçamento de energia solar e ficar a espera de um parceiro SolCoop!");
+        System.out.println("Insira o valor em kWh das suas últimas 12 contas de energia: ");
 
         for (int i = 0; i < 12; i++) {
-            System.out.print("Conta " + (i + 1) + ": ");
+            System.out.print("Conta [" + (i + 1) + "]: ");
             ultimasContas.add(Float.parseFloat(scanner.nextLine()));
         }
 
@@ -77,8 +81,7 @@ public class SunPartner {
 
     public static SunPartner solicitarInformacoesDoUsuario() {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Insira suas informações:");
+        System.out.println("Por favor, insira suas informações:");
 
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
@@ -87,8 +90,8 @@ public class SunPartner {
         float mediaContas = calcularMedia(ultimasContas);
         float mediaComMargemSeguranca = calcularMediaComMargemSeguranca(mediaContas);
 
-        System.out.println("Média das últimas 12 contas de energia: " + mediaContas);
-        System.out.println("Média com margem de segurança de 15%: " + mediaComMargemSeguranca);
+        System.out.println("\nMédia das últimas 12 contas de energia: %.2f" + mediaContas);
+        System.out.println("Média com margem de segurança de 15%: %.2f" + mediaComMargemSeguranca);
         System.out.println("A margem de segurança é importante para que o seu consumo seja sempre atendido com energia limpa.");
 
         List<String> empresasEscolhidas = new ArrayList<>();
@@ -96,7 +99,7 @@ public class SunPartner {
         String empresa = scanner.nextLine();
         empresasEscolhidas.add(empresa.trim());
 
-        return new SunPartner(cep, ultimasContas, empresasEscolhidas);
+        return new SunPartner(contadorId, empresa, empresa, empresa, empresa, null, cep, ultimasContas, empresasEscolhidas);
     }
 
     public static void main(String[] args) {
@@ -104,6 +107,4 @@ public class SunPartner {
         sunPartnerInstance.solicitarOrcamento();
     }
 }
-
-    
 

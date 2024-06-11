@@ -1,125 +1,92 @@
 package model.seeker;
-// Importações de classes que acho que vá precisar
-import model.Usuario;
-import model.partner.*;
-import model.share.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.Date;
 
-public class Pedido{     
-    public Pedido(int numPedido, String dataCriacao, String nomeClienteShare, int numeroClienteShare, String nomeClienteSeeker, int numClienteSeeker){
-        this.numPedido = numPedido;
-        this.dataCriacao = dataCriacao;
-        this.nomeClienteShare = nomeClienteShare;
-        this.numeroClienteShare = numeroClienteShare;
-        this.nomeClienteSeeker = nomeClienteSeeker;
-        this.numClienteSeeker = numClienteSeeker;
+public class Pedido {
+    private static int contador = 1;
+    private int idPedido;
+    private String nomeVendedor;
+    private int idVendedor;
+    private String nomeComprador;
+    private int idComprador;
+    private Date data;
+    private String status;
 
-    }
-    static Scanner sc = new Scanner(System.in);
-
-    private List<Pedido> listaPedidos = new ArrayList<>();
-
-    private int numPedido;
-    private String dataCriacao;
-    private String nomeClienteShare;
-    private int numeroClienteShare;
-    private String nomeClienteSeeker;
-    private int numClienteSeeker;
-    private String estadoPedido;
-
-    //* INICIO DOS SETS E GETS *//
-    /* Set do número do pedido */
-    public void setNumPedido(int numPedido) {
-        this.numPedido = numPedido;
-    }
-    /* Get do número do pedido */
-    public int getNumPedido() {
-        return numPedido;
-    }
-    /* Set da data de criação do pedido */
-    public void setDataCriacao(String dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-    /* Get da data de criação do pedido */
-    public String getDataCriacao() {
-        return dataCriacao;
-    }
-    /* Set do nome do cliente Share */
-    public void setNomeClienteShare(String nomeClienteShare) {
-        this.nomeClienteShare = nomeClienteShare;
-    }
-    /* Get do nome do cliente Share */
-    public String getNomeClienteShare() {
-        return nomeClienteShare;
-    }
-    /* Set do número do cliente Share */
-    public void setNumeroClienteShare(int numeroClienteShare) {
-        this.numeroClienteShare = numeroClienteShare;
-    }
-    /* Get do número do cliente Share */
-    public int getNumeroClienteShare() {
-        return numeroClienteShare;
-    }
-    /* Set do nome do cliente Seeker */
-    public void setNomeClienteSeeker(String nomeClienteSeeker) {
-        this.nomeClienteSeeker = nomeClienteSeeker;
-    }
-    /* Get do nome do cliente Seeker */
-    public String getNomeClienteSeeker() {
-        return nomeClienteSeeker;
-    }
-    /* Set do número do cliente Seeker */
-    public void setNumClienteSeeker(int numClienteSeeker) {
-        this.numClienteSeeker = numClienteSeeker;
-    }
-    /* Get do número do cliente Seeker */
-    public int getNumClienteSeeker() {
-        return numClienteSeeker;
-    }
-    /* Set do estado do pedido NÃO USADO POR ENQUANTO */
-    public void setEstadoPedido(String estadoPedido) {
-        this.estadoPedido = estadoPedido;
-    }
-    /* Get do estado do pedido NÃO USADO POR ENQUANTO */ 
-    public String getEstadoPedido() {
-        return estadoPedido;
-    }
-    //* FIM DOS SETS E GETS *//
-    
-    /* Método para criar um pedido */
-    public void criarPedido(){//Aqui deveria puxar do seeker a nova compra de energia e do share a venda de energia e preencheria automaticamente
+    public Pedido(String nomeVendedor, int idVendedor, String nomeComprador, int idComprador) {
+        this.idPedido = contador++;
+        this.nomeVendedor = nomeVendedor;
+        this.idVendedor = idVendedor;
+        this.nomeComprador = nomeComprador;
+        this.idComprador = idComprador;
+        this.data = new Date();
+        this.status = "Pendente";
     }
 
-    /* Método para finalizar e/ou cancelar um pedido */
-    public void aprovarOuCancelarPedido(Scanner sc, Pedido pedido) {
-        do{
-            System.out.println("Você deseja aprovar o pedido? (s/n)");
-            String resp = sc.next();
-        
-                if (resp.equalsIgnoreCase("s")) {
-                    System.out.println("Prosseguindo para o pagamento...");
-                    // Precisa do camninho para o pagamento AQUI
-                    break; // por enquanto que não temos o caminho para o pagamento
-
-                } else if (resp.equalsIgnoreCase("n")) {/* Confirmando que deseja cancelar e excluir o pedido */
-                    System.out.println("Você tem certeza de que deseja cancelar e excluir o pedido? (s/n)");
-                    resp = sc.next();
-        
-                    if (resp.equalsIgnoreCase("s")) {
-                        System.out.println("Cancelando o pedido...");
-                    } else {
-                        System.out.println("O pedido não foi cancelado.");
-                    }
-                } else {
-                    System.out.println("Resposta inválida. Por favor, responda com 's' para sim ou 'n' para não.");
-                }
-        }while (true);
+    public static int getContador() {
+        return contador;
     }
 
+    public static void setContador(int contador) {
+        Pedido.contador = contador;
+    }
+
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public String getNomeVendedor() {
+        return nomeVendedor;
+    }
+
+    public void setNomeVendedor(String nomeVendedor) {
+        this.nomeVendedor = nomeVendedor;
+    }
+
+    public int getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(int idVendedor) {
+        this.idVendedor = idVendedor;
+    }
+
+    public String getNomeComprador() {
+        return nomeComprador;
+    }
+
+    public void setNomeComprador(String nomeComprador) {
+        this.nomeComprador = nomeComprador;
+    }
+
+    public int getIdComprador() {
+        return idComprador;
+    }
+
+    public void setIdComprador(int idComprador) {
+        this.idComprador = idComprador;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void imprimirPedido(){
+        System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ") | Comprador: " + nomeComprador + " (ID: " + idComprador + ") | Data: " + data + " | Status: " + status);
+    }
 }
-
-
-

@@ -17,10 +17,10 @@ public class Usuario {
     private String email;
     private String senha;
     private String numeroTelefone;
-    private String endereco;
+    private Endereco endereco;
     private static List<Usuario> listaUsuarios = new ArrayList<>();
 
-    public Usuario(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
+    public Usuario(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
@@ -69,25 +69,32 @@ public class Usuario {
         this.numeroTelefone = numeroTelefone;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
-    public void adicionarUsuariosTestes() {
-        Usuario usuario1 = new SunSeeker(contadorId++, "Pedro", "pedroteste@gmail.com", "teste123", "71999999999", "endereco1");
-        Usuario usuario2 = new SunShare(contadorId++, "Felipe", "felipeteste@gmail.com", "teste123", "71999999999", "endereco2", new MercadoEnergia());
-        Usuario usuario3 = new SunSeeker(contadorId++, "Emily", "emilyteste@gmail.com", "teste123", "71999999999", "endereco3");
-        Usuario usuario4 = new SunShare(contadorId++, "Beatriz", "beatrizteste@gmail.com", "teste123", "71999999999", "endereco4", new MercadoEnergia());
-        Usuario usuario5 = new SunShare(contadorId++, "Ana", "anateste@gmail.com", "teste123", "71999999999", "endereco5", new MercadoEnergia());
+    public static void adicionarUsuariosTestes() {
+        Usuario usuario1 = new SunSeeker(contadorId++, "Pedro", "pedroteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade1", "Bairro1", "Rua1", "1", "11111-111"));
+        Usuario usuario2 = new SunShare(contadorId++, "Felipe", "felipeteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade2", "Bairro2", "Rua2", "2", "22222-222"), new MercadoEnergia());
+        Usuario usuario3 = new SunSeeker(contadorId++, "Emily", "emilyteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade3", "Bairro3", "Rua3", "3", "33333-333"));
+        Usuario usuario4 = new SunShare(contadorId++, "Beatriz", "beatrizteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade4", "Bairro4", "Rua4", "4", "44444-444"), new MercadoEnergia());
+        Usuario usuario5 = new SunShare(contadorId++, "Ana", "anateste@gmail.com", "teste123", "71999999999", new Endereco("Cidade5", "Bairro5", "Rua5", "5", "55555-555"), new MercadoEnergia());
         listaUsuarios.add(usuario1);
         listaUsuarios.add(usuario2);
         listaUsuarios.add(usuario3);
         listaUsuarios.add(usuario4);
         listaUsuarios.add(usuario5);
+    }
+
+    public static void listarUsuarios() {
+        System.out.println("\nListar todos usuarios do SolCoop: ");
+        for (Usuario usuario : listaUsuarios) {
+            System.out.println("ID: " + usuario.getIdUsuario() + " | Nome: " + usuario.getNome() + " | Email: " + usuario.getEmail() + " | Telefone: " + usuario.getNumeroTelefone() + " | Endereço: " + usuario.getEndereco());
+        }
     }
 
     public static void menu() {
@@ -126,11 +133,13 @@ public class Usuario {
         }
     }
 
-    public static void listarUsuarios() {
-        System.out.println("Listar todos usuarios do SolCoop: ");
+    public static Usuario getUsuarioById(int idUsuario) {
         for (Usuario usuario : listaUsuarios) {
-            System.out.println("ID: " + usuario.getIdUsuario() + " | Nome: " + usuario.getNome() + " | Email: " + usuario.getEmail() + " | Telefone: " + usuario.getNumeroTelefone() + " | Endereço: " + usuario.getEndereco());
+            if (usuario.getIdUsuario() == idUsuario) {
+                return usuario;
+            }
         }
+        return null;
     }
 
     public static void registarNovoUsuario() {//ajustar endereco
@@ -152,14 +161,29 @@ public class Usuario {
         System.out.println("Digite o número de telefone do usuário: ");
         String numeroTelefone = sc.nextLine();
 
-        System.out.println("Digite o endereço do usuário: ");
+        System.out.println("Digite a cidade do usuário: ");
+        String cidade = sc.nextLine();
+
+        System.out.println("Digite o bairro do usuário: ");
+        String bairro = sc.nextLine();
+
+        System.out.println("Digite a rua do usuário: ");
+        String rua = sc.nextLine();
+
+        System.out.println("Digite o número da casa do usuário: ");
+        String numero = sc.nextLine();
+
+        System.out.println("Digite o CEP do usuário: ");
         String endereco = sc.nextLine();
 
+        Endereco enderecoUsuario = new Endereco(cidade, bairro, rua, numero, endereco);
+
         System.out.println("Agora você é um usuário do SolCoop! Seja bem vindo, " + nome + "!\n");
+
         System.out.println("Escolha qual tipo de usuário você se identifica: ");
         System.out.println("1 - SunShare - Usuario que compartilha a energia gerada através de painéis solares.");
         System.out.println("2 - SunSeeker - Usuario que compra energia gerada através de painéis solares.");
-        System.out.println("3 - SunPartner - Usuário que gostaria de dividir uma nova compra junto a outro usuário de placa solar.");
+        System.out.println("3 - SunPartner - Usuário que gostaria de dividir uma nova compra, junto a outro usuário, de placa solar.");
         tipoUsuario = sc.nextInt();
 
         Usuario usuario = null;//Se não for inicializado, o compilador não deixa compilar
@@ -168,23 +192,25 @@ public class Usuario {
             case 1:
                 System.out.println("\nVocê escolheu ser um SunShare!");
                 System.out.println("Você se tornou um compartilhador de energia solar! Por favor, cadastre os dados da sua geração de energia:\n");
-                SunShare sunShare = new SunShare (novoId, nome, email, senha, numeroTelefone, endereco, new MercadoEnergia());
+                SunShare sunShare = new SunShare(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco), new MercadoEnergia());
                 sunShare.entradaDados();
                 sunShare.verificarMercado();
                 listaUsuarios.add(sunShare);
                 break;
 
             case 2:
-                System.out.println("Você escolheu ser um SunSeeker!");
-                SunSeeker sunSeeker = new SunSeeker(novoId, nome, email, senha, numeroTelefone, endereco);
+                System.out.println("\nVocê escolheu ser um SunSeeker!");
+                SunSeeker sunSeeker = new SunSeeker(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco));
                 sunSeeker.ColetandoDados();
                 sunSeeker.PrintValorFinal();
                 listaUsuarios.add(sunSeeker);
                 break;
-            case 3:
-                System.out.println("Você escolheu ser um SunPartner!");
-                // metodos do partner
-                //listaUsuarios.add(sunPartner);
+            case 3: //nao está funcionando os métodos
+                System.out.println("\nVocê escolheu ser um SunPartner!");
+                SunPartner sunPartner = new SunPartner(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco), "cep", SunPartner.solicitarUltimasContas(), new ArrayList<String>());
+                sunPartner.solicitarInformacoesDoUsuario();
+                sunPartner.solicitarOrcamento();
+                listaUsuarios.add(sunPartner);
                 break;
             default:
                 System.out.println("Opção inválida!");
@@ -194,7 +220,7 @@ public class Usuario {
 
     }
     public static void main(String[] args) {
-        Usuario usuario1 = new Usuario(0, "nome", "email", "senha", "numeroTelefone", "endereco");
+        adicionarUsuariosTestes();
         menu();
     }
 }

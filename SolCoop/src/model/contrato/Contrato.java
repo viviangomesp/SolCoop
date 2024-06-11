@@ -3,8 +3,8 @@ package model.contrato;
 import java.util.Scanner;
 
 public class Contrato {
-     Scanner sc = new Scanner(System.in);
-    //////////////////////* Metodo booleano para concordar ou não com o contrato  *////////////////////
+    Scanner sc = new Scanner(System.in);
+    //Metodo booleano para concordar ou não com o contrato
     public boolean termosContrato(){
         System.out.println("Contrato Anual de Compartilhamento de Energia Solar\n" +
         "\nEste Contrato Anual de Compartilhamento de Energia Solar é celebrado entre a SolCoop, e Cliente, com a intenção de compartilhar energia solar de acordo com os termos e condições estabelecidos abaixo:\n" +
@@ -27,7 +27,6 @@ public class Contrato {
             return false;
         }
     }
-    //////////////////////*FIM DO METODO PARA CONCORDAR COM O CONTRATO *////////////////////
 
     public static void main(String[] args) {
         Contrato contrato = new Contrato();

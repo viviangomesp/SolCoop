@@ -1,5 +1,6 @@
 package model.share;
 
+import model.Endereco;
 import model.Usuario;
 import model.seeker.SunSeeker;
 
@@ -11,7 +12,7 @@ public class SunShare extends Usuario {
     protected float energiaTotal;
     private MercadoEnergia mercado;
 
-    public SunShare(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco, MercadoEnergia mercado) {
+    public SunShare(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco, MercadoEnergia mercado) {
         super(idUsuario, nome, email, senha, numeroTelefone, endereco);
         this.mercado = mercado;
     }
@@ -96,14 +97,14 @@ public class SunShare extends Usuario {
     }
 
     public void importarPrecoVenda() {
-        SunSeeker seeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", "endereco");
+        SunSeeker seeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", new Endereco("cidade", "bairro", "rua", "numero", "cep"));
         float consumoSeeker = seeker.getMediaConsumo();
         System.out.println("O preço de venda da energia é: " + consumoSeeker);
     }
 
     public static void main(String[] args) {
         MercadoEnergia mercado = new MercadoEnergia();
-        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", "endereco", mercado);
+        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", new Endereco("cidade", "bairro", "rua", "numero", "cep"), mercado);
         share1.entradaDados();
         share1.verificarMercado();
     }

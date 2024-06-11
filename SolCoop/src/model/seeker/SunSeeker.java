@@ -1,5 +1,6 @@
 package model.seeker;
 
+import model.Endereco;
 import model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 public class SunSeeker extends Usuario {
     Scanner sc = new Scanner(System.in);
 
-    public SunSeeker(int idUsuario, String nome, String email, String senha, String numeroTelefone, String endereco) {
+    public SunSeeker(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco) {
         super(idUsuario, nome, email, senha, numeroTelefone, endereco);
         this.ultimasContas = new ArrayList<>();
     }
@@ -92,14 +93,14 @@ public class SunSeeker extends Usuario {
 
     /* Método para recolher o valor do tributo da energia */
     public void ColetandoDados() {
-        System.out.println("/// Bem vindo ao SunSeeker\n Vamos comecar coletando algumas informacoes necessarias ///");
-        System.out.println("Primeiro informe o valor do tributo da energia da sua região (Deve aparecer em sua conta de energia)\nExemplo: 0,50 (R$/kWh)");
+        System.out.println("Voce se tornou um comprador de energia limpa! Por favor, cadastre os seus dados: ");
+        System.out.println("\nPrimeiro informe o valor do tributo da energia da sua região (Deve aparecer em sua conta de energia)\nExemplo: 0,50 (R$/kWh)");
         System.out.println("O valor do tributo será adicionado ao valor final a ser pago.");
         System.out.println("Informe o valor do tributo: ");
         setValorTributo(sc.nextFloat());
         /* Pedindo as ultimas contas para realização dos cálculos  */
-        System.out.println("/// Agora pediremos as ultimas 12 contas de energia para calcular sua media de consumo mensal///");
-        System.out.println("///Informar consumo de energia em kWh (quilowatt-hora) presente nas contas de energia que sera usado para calcular sua media de consumo.///");
+        System.out.println("\n/// Agora pediremos as ultimas 12 contas de energia para calcular sua media de consumo mensal ///");
+        System.out.println("Informe consumo de energia em kWh (quilowatt-hora) presente nas contas de energia que sera usado para calcular sua media de consumo.\n");
         for (int i = 1; i <= 12; i++) {
             System.out.println("Informe o valor da conta [" + i + "] (em kWh): ");
             float conta = sc.nextFloat();
@@ -115,10 +116,9 @@ public class SunSeeker extends Usuario {
     }
 
     public static void main(String[] args) {
-        SunSeeker sunSeeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", "endereco");
+        SunSeeker sunSeeker = new SunSeeker(0, "nome", "email", "senha", "numeroTelefone", new Endereco("cidade", "bairro", "rua", "numero", "cep"));
         sunSeeker.ColetandoDados();
         sunSeeker.PrintValorFinal();
-       
     }
 
 }
