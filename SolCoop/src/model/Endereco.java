@@ -57,7 +57,7 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public void entradaDadosEndereco() {
+    public void entradaDadosEndereco() { //Cadastra o endereco completo do usuario
         Scanner sc = new Scanner(System.in);
 
         System.out.println("\n/// Cadastro de Endereço ///");

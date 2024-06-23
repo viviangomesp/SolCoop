@@ -57,21 +57,21 @@ public class MercadoEnergia {
         }
         return false;
     }
-
+    
     private void criarPedido(int idVendedor, int idComprador, String nomeComprador) {
-        Usuario vendedor = Usuario.getUsuarioById(idVendedor);
-        Usuario comprador = Usuario.getUsuarioById(idComprador);
-        if (vendedor != null && comprador != null) {
+        Usuario vendedor = Usuario.getUsuarioById(idVendedor);//Procura o vendedor pelo ID
+        Usuario comprador = Usuario.getUsuarioById(idComprador);//Procura o comprador pelo ID
+        if (vendedor != null && comprador != null) {//Se o vendedor e o comprador existirem, cria o pedido
             Pedido pedido = new Pedido(vendedor.getNome(), idVendedor, comprador.getNome(), idComprador);
             pedidos.add(pedido);
             System.out.println("Pedido criado com sucesso!");
             pedido.imprimirPedido();;
-        } else {
+        } else { //Caso nao existirem, exibe mensagem de erro
             System.out.println("Erro ao criar o pedido: Usuário não encontrado.");
         }
     }
 
-    public Pedido getPedidoById(int idPedido) {
+    public Pedido getPedidoById(int idPedido) {//Procura um pedido pelo ID e retorna o pedido
         for (Pedido pedido : pedidos) {
             if (pedido.getIdPedido() == idPedido) {
                 return pedido;
@@ -80,7 +80,7 @@ public class MercadoEnergia {
         return null;
     }
 
-    public void listarPedidos() {
+    public void listarPedidos() {//Metodo para listar os pedidos
         System.out.println("/// Mercado de Energia - Pedidos de energia ///");
         for (Pedido pedido : pedidos) {
             pedido.imprimirPedido();

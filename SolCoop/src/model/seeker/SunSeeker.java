@@ -2,6 +2,7 @@ package model.seeker;
 
 import model.Endereco;
 import model.Usuario;
+import model.share.MercadoEnergia;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

@@ -133,7 +133,7 @@ public class Usuario {
         }
     }
 
-    public static Usuario getUsuarioById(int idUsuario) {
+    public static Usuario getUsuarioById(int idUsuario) {//Procura um usuário pelo ID e retorna o usuário
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getIdUsuario() == idUsuario) {
                 return usuario;
