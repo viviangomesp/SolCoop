@@ -1,4 +1,5 @@
 package model.share;
+import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import model.Usuario;
 import model.seeker.Pedido;
 
 public class MercadoEnergia {
+    Scanner sc = new Scanner(System.in);
 
     private List<OfertaEnergia> ofertasEnergia; //Lista de ofertas de energia
     private List<Pedido> pedidos; //Lista de pedidos de energia
@@ -57,8 +59,20 @@ public class MercadoEnergia {
         }
         return false;
     }
-    
-    private void criarPedido(int idVendedor, int idComprador, String nomeComprador) {
+    /* metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
+    public void solicitarCompraEnergia() {
+        System.out.println("Digite o ID do vendedor (SunShare) que deseja comprar energia: ");
+        int idVendedor = sc.nextInt();
+        System.out.println("Digite a quantidade de energia que deseja comprar (em kWh): ");
+        float quantidade = sc.nextFloat();
+        if (comprarEnergia(idVendedor, quantidade)) {
+            System.out.println("Compra realizada com sucesso!");
+        } else {
+            System.out.println("Erro ao realizar a compra: Oferta não encontrada ou quantidade insuficiente.");
+        }
+    }
+
+    public void criarPedido(int idVendedor, int idComprador, String nomeComprador) {
         Usuario vendedor = Usuario.getUsuarioById(idVendedor);//Procura o vendedor pelo ID
         Usuario comprador = Usuario.getUsuarioById(idComprador);//Procura o comprador pelo ID
         if (vendedor != null && comprador != null) {//Se o vendedor e o comprador existirem, cria o pedido

@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.partner.SunPartner;
+import model.seeker.Pedido;
 import model.seeker.SunSeeker;
 import model.share.MercadoEnergia;
+import model.share.Pagamento;
 import model.share.SunShare;
-
 public class Usuario {
 
     protected static int contadorId = 1;
@@ -19,6 +20,9 @@ public class Usuario {
     private String numeroTelefone;
     private Endereco endereco;
     private static List<Usuario> listaUsuarios = new ArrayList<>();
+    static MercadoEnergia mercado = new MercadoEnergia();
+    static Pagamento pagamento = new Pagamento();
+    
 
     public Usuario(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco) {
         this.idUsuario = idUsuario;
@@ -204,11 +208,18 @@ public class Usuario {
                 sunSeeker.ColetandoDados();
                 sunSeeker.PrintValorFinal();
                 listaUsuarios.add(sunSeeker);
+                System.out.println();//Pular linha
+                mercado.adicionarOfertasTeste();
+                mercado.listarOfertas();
+                mercado.solicitarCompraEnergia();
+                mercado.criarPedido(tipoUsuario, novoId, nome);
+                Pagamento.processarPagamento(mercado, 1);
+                
                 break;
             case 3: //nao está funcionando os métodos
                 System.out.println("\nVocê escolheu ser um SunPartner!");
                 SunPartner sunPartner = new SunPartner(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco), "cep", SunPartner.solicitarUltimasContas(), new ArrayList<String>());
-                sunPartner.solicitarInformacoesDoUsuario();
+                SunPartner.solicitarInformacoesDoUsuario();
                 sunPartner.solicitarOrcamento();
                 listaUsuarios.add(sunPartner);
                 break;

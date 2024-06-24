@@ -73,25 +73,7 @@ public class SunSeeker extends Usuario {
 
     // *FIM DOS SET E GETS DO SunSeeker *//
 
-    /* Método para calcular quanto o Seeker vai pagar com adição de 15% de margem de erro e o valor do tributo local */
-    public float PrecoFinalSeeker(float conta) {
-        /* Adicionar uma conta a lista de contas */
-        ultimasContas.add(conta);
     
-        /* Calcular a média de consumo */
-        float soma = 0;
-        for (Float valorConta : ultimasContas) {
-            soma += valorConta;
-        }
-        mediaConsumo = soma / ultimasContas.size();
-    
-        /* Calcular o consumo total de energia (add margem de erro) */
-        consumoTotal = mediaConsumo + (mediaConsumo * margemErro);
-    
-        /* Calcular o valor da conta de energia */ 
-        return consumoTotal * valorTributo;
-    }
-
     /* Método para recolher o valor do tributo da energia */
     public void ColetandoDados() {
         System.out.println("Voce se tornou um comprador de energia limpa! Por favor, cadastre os seus dados: ");
@@ -108,12 +90,27 @@ public class SunSeeker extends Usuario {
             ultimasContas.add(conta);
         }
     }
+    /* Método para calcular quanto o Seeker vai pagar com adição de 15% de margem de erro e o valor do tributo local */
+        public float PrecoFinalSeeker() {      
+            /* Calcular a média de consumo */
+            float soma = 0;
+            for (Float valorConta : ultimasContas) {
+                soma += valorConta;
+            }
+            mediaConsumo = soma / ultimasContas.size();
+        
+            /* Calcular o consumo total de energia (add margem de erro) */
+            consumoTotal = mediaConsumo + (mediaConsumo * margemErro);
+        
+            /* Calcular o valor da conta de energia */ 
+            return consumoTotal * valorTributo;
+        }
 
     /* Método para imprimir o valor a ser pago pelo seeker */
     public void PrintValorFinal(){
-        PrecoFinalSeeker(0.0f); // Chamando o método para atualizar as variáveis
+        float precoFinal = PrecoFinalSeeker(); // Chamando o método para atualizar as variáveis
         System.out.printf("Sua media de consumo mensal é: %.2f kWh\n", mediaConsumo);
-        System.out.printf("O preço final da energia com os 15% margem de seguranca: R$ %.2f\n", PrecoFinalSeeker(0.0f));
+        System.out.printf("O preço final da energia com os 15%% margem de seguranca: R$ %.2f\n", precoFinal);
     }
 
     public static void main(String[] args) {
