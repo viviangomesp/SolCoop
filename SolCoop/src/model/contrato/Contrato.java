@@ -19,24 +19,17 @@ public class Contrato {
         "\nLegislação Aplicável:\nEste Contrato será regido e interpretado de acordo com as leis do País/Estado.\n" +
         "\nAssinaturas:\nEste Contrato pode ser assinado em duas vias, sendo cada cópia considerada original e ambas juntas constituindo o mesmo instrumento.\n" +
         "\nAo assinar este Contrato, as partes reconhecem que leram, entenderam e concordam com todos os termos e condições estabelecidos acima.");
-        System.out.println("Deseja concordar com o contrato? (S/N)");
-        String resposta = sc.next().toUpperCase();
-        if(resposta.equals("S")){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public static void main(String[] args) {
-        Contrato contrato = new Contrato();
-        boolean aceitou = contrato.termosContrato();
-        if (aceitou) {
-            System.out.println("Você concordou com o contrato.");
-        } else {
-            System.out.println("Você não concordou com o contrato.");
+        while (true) { // Garante que o usuário aceite o contrato
+            System.out.println("Deseja concordar com o contrato? (S/N)");
+            String resposta = sc.next().toUpperCase();
+            if (resposta.equals("S")) { // Se for sim, sai do loop e retorna true
+                return true;
+            } else if (resposta.equals("N")) {
+                System.out.println("Não é possível realizar o pedido, pois você não concordou com o contrato.");
+                return false;
+            } else {
+                System.out.println("Resposta inválida. Por favor, digite S para sim ou N para não.");
+            }
         }
     }
 }
-    
-

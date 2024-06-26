@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Usuario;
+import model.contrato.Contrato;
 import model.seeker.Pedido;
+import model.share.Pagamento;
 
 public class MercadoEnergia {
     Scanner sc = new Scanner(System.in);
@@ -33,16 +35,18 @@ public class MercadoEnergia {
 
     //Adicionando 5 ofertas para preencher a lista de ofertas
     public void adicionarOfertasTeste(){
-        OfertaEnergia oferta1 = new OfertaEnergia(30, 100);
-        OfertaEnergia oferta2 = new OfertaEnergia(31, 200);
-        OfertaEnergia oferta3 = new OfertaEnergia(32, 300);
-        OfertaEnergia oferta4 = new OfertaEnergia(33, 400);
-        OfertaEnergia oferta5 = new OfertaEnergia(34, 500);
-        ofertasEnergia.add(oferta1);
-        ofertasEnergia.add(oferta2);
-        ofertasEnergia.add(oferta3);
-        ofertasEnergia.add(oferta4);
-        ofertasEnergia.add(oferta5);
+    List<Usuario> listaUsuarios = Usuario.getListaUsuarios();//Importa a lista de usuários
+    int idShare1 = listaUsuarios.get(1).getIdUsuario();
+    int idShare2 = listaUsuarios.get(3).getIdUsuario();
+    int idShare3 = listaUsuarios.get(4).getIdUsuario(); 
+
+    OfertaEnergia oferta1 = new OfertaEnergia(idShare1, 250);
+    OfertaEnergia oferta2 = new OfertaEnergia(idShare2, 820);
+    OfertaEnergia oferta3 = new OfertaEnergia(idShare3, 500);
+
+    ofertasEnergia.add(oferta1);
+    ofertasEnergia.add(oferta2);
+    ofertasEnergia.add(oferta3);
     }
 
     public boolean comprarEnergia(int idOferta, float quantidade) {
@@ -59,29 +63,64 @@ public class MercadoEnergia {
         }
         return false;
     }
-    /* metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
-    public void solicitarCompraEnergia() {
-        System.out.println("Digite o ID do vendedor (SunShare) que deseja comprar energia: ");
-        int idVendedor = sc.nextInt();
-        System.out.println("Digite a quantidade de energia que deseja comprar (em kWh): ");
-        float quantidade = sc.nextFloat();
-        if (comprarEnergia(idVendedor, quantidade)) {
-            System.out.println("Compra realizada com sucesso!");
-        } else {
-            System.out.println("Erro ao realizar a compra: Oferta não encontrada ou quantidade insuficiente.");
-        }
-    }
 
     public void criarPedido(int idVendedor, int idComprador, String nomeComprador) {
-        Usuario vendedor = Usuario.getUsuarioById(idVendedor);//Procura o vendedor pelo ID
-        Usuario comprador = Usuario.getUsuarioById(idComprador);//Procura o comprador pelo ID
-        if (vendedor != null && comprador != null) {//Se o vendedor e o comprador existirem, cria o pedido
-            Pedido pedido = new Pedido(vendedor.getNome(), idVendedor, comprador.getNome(), idComprador);
-            pedidos.add(pedido);
-            System.out.println("Pedido criado com sucesso!");
-            pedido.imprimirPedido();;
-        } else { //Caso nao existirem, exibe mensagem de erro
-            System.out.println("Erro ao criar o pedido: Usuário não encontrado.");
+        Usuario vendedor = null; // Inicializa o vendedor como nulo
+        Usuario comprador = null; // Inicializa o comprador como nulo
+        do {
+            vendedor = Usuario.getUsuarioById(idVendedor); // Busca o vendedor pelo ID
+            comprador = Usuario.getUsuarioById(idComprador); // Busca o comprador pelo ID
+            if (vendedor != null && comprador != null) { // Se o vendedor e o comprador existirem, cria o pedido
+                Pedido pedido = new Pedido(vendedor.getNome(), idVendedor, comprador.getNome(), idComprador);
+                pedidos.add(pedido);
+                System.out.println("Pedido criado com sucesso!");
+                pedido.imprimirPedido();
+            } else { // Caso nao existirem, exibe mensagem de erro e solicita novamente o ID do vendedor e a quantidade de energia
+                System.out.println("ERRO: Usuário não encontrado.\n");
+                System.out.println("Por favor, digite os seguintes dados corretamente: ");
+                solicitarCompraEnergia();
+            }
+        } while (vendedor == null || comprador == null);
+    }
+
+    /* metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
+    public void solicitarCompraEnergia() {
+        Scanner sc = new Scanner(System.in);
+        int idVendedor = 0;
+        float quantidade = 0;
+        String continuarCompra;
+        do {
+            System.out.println("\nDigite o ID do vendedor (SunShare) que deseja comprar energia: ");
+            idVendedor = sc.nextInt();
+            System.out.println("Digite a quantidade de energia que deseja comprar (em kWh): ");
+            quantidade = sc.nextFloat();
+            
+            Usuario vendedor = Usuario.getUsuarioById(idVendedor);
+            if (vendedor == null || quantidade <= 0) {
+                System.out.println("ERRO: Vendedor não encontrado ou quantidade inválida.\n");
+            }
+        } while (Usuario.getUsuarioById(idVendedor) == null || quantidade <= 0);
+
+        if (comprarEnergia(idVendedor, quantidade)) {
+            System.out.println("ID do vendedor: " + idVendedor + " | Quantidade de energia: " + quantidade + " kWh");
+            System.out.println("Deseja continuar a compra (S/N)?\nA seguir será exibido o contrato de compra de energia. É necessário aceitar para finalizar o pedido.");
+            continuarCompra = sc.next();
+            if (continuarCompra.equalsIgnoreCase("S")) {
+                Contrato contrato = new Contrato();
+                boolean aceitouContrato = contrato.termosContrato();
+            } else {
+                System.out.println("Contrato nao aceito. Compra cancelada.");
+                return;
+            }
+            criarPedido(idVendedor, Usuario.getUsuarioById(idVendedor).getIdUsuario(), Usuario.getUsuarioById(idVendedor).getNome());
+            Pagamento pagamento = new Pagamento();
+            pagamento.processarPagamento(this, pedidos.get(pedidos.size() - 1).getIdPedido());//Processa o pagamento do pedido criado
+
+        } else {
+            System.out.println("Erro ao realizar a compra: Oferta não encontrada ou quantidade insuficiente.");
+            System.out.println("Tente novamente a seguir: \n");
+            listarOfertas();
+            solicitarCompraEnergia();
         }
     }
 
@@ -101,9 +140,12 @@ public class MercadoEnergia {
         }
     }
     
+
     public static void main(String[] args) {
         MercadoEnergia mercadoEnergia = new MercadoEnergia();
+        Usuario.adicionarUsuariosTestes();
         mercadoEnergia.adicionarOfertasTeste();
         mercadoEnergia.listarOfertas();
+        mercadoEnergia.solicitarCompraEnergia();
     }
 }

@@ -19,7 +19,7 @@ public class Pedido {
         this.nomeComprador = nomeComprador;
         this.idComprador = idComprador;
         this.data = new Date();
-        this.status = "Pendente";
+        this.status = "Não concluído";
     }
 
     public static int getContador() {
@@ -87,6 +87,6 @@ public class Pedido {
     }
 
     public void imprimirPedido(){
-        System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ") | Comprador: " + nomeComprador + " (ID: " + idComprador + ") | Data: " + data + " | Status: " + status);
+        System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ")" + "| Data: " + data + " | Status: " + status);
     }
 }
