@@ -11,7 +11,7 @@ public class Pagamento {
 
         if (pedido != null) {//Se o pedido for encontrado, exibe o pedido e pergunta se deseja aceitar
             Scanner sc = new Scanner(System.in);
-            System.out.println("Deseja aceitar o pedido? (S/N): ");
+            System.out.println("\nDeseja aceitar o pedido? (S/N): ");
             String resposta = sc.nextLine();
             if (resposta.equalsIgnoreCase("S")) {//Se a resposta for sim, altera o status do pedido para concluído
                 pedido.setStatus("Concluído");
@@ -24,6 +24,7 @@ public class Pagamento {
             }
         } else {//Se o pedido não for encontrado, exibe mensagem de erro
             System.out.println("Pedido não encontrado!");
+            //mudei aqui
         }
     }
 }

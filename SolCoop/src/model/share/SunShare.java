@@ -87,7 +87,7 @@ public class SunShare extends Usuario {
             System.out.println("Dados enviados com sucesso!");
             mercado.addOferta(this);
             mercado.adicionarOfertasTeste();
-            mercado.listarOfertas();
+            mercado.atualizarMercado();
         } else {
             System.out.println("Operação cancelada.");
             System.out.println("Por favor, digite novamente os dados.");

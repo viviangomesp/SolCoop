@@ -20,7 +20,7 @@ public class Contrato {
         "\nAssinaturas:\nEste Contrato pode ser assinado em duas vias, sendo cada cópia considerada original e ambas juntas constituindo o mesmo instrumento.\n" +
         "\nAo assinar este Contrato, as partes reconhecem que leram, entenderam e concordam com todos os termos e condições estabelecidos acima.");
         while (true) { // Garante que o usuário aceite o contrato
-            System.out.println("Deseja concordar com o contrato? (S/N)");
+            System.out.println("\n\nDeseja concordar com o contrato? (S/N)");
             String resposta = sc.next().toUpperCase();
             if (resposta.equals("S")) { // Se for sim, sai do loop e retorna true
                 return true;

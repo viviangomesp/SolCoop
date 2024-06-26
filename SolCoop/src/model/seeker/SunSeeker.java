@@ -109,7 +109,7 @@ public class SunSeeker extends Usuario {
     /* Método para imprimir o valor a ser pago pelo seeker */
     public void PrintValorFinal(){
         float precoFinal = PrecoFinalSeeker(); // Chamando o método para atualizar as variáveis
-        System.out.printf("Sua media de consumo mensal é: %.2f kWh\n", mediaConsumo);
+        System.out.printf("\nSua media de consumo mensal é: %.2f kWh\n", mediaConsumo);
         System.out.printf("O preço final da energia com os 15%% margem de seguranca: R$ %.2f\n", precoFinal);
     }
 

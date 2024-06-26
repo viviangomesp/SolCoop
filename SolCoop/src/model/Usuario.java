@@ -125,13 +125,15 @@ public class Usuario {
 
             switch (opcao) {
                 case 1:
+                    mercado.atualizarMercado();
                     registarNovoUsuario();
                     break;
                 case 2:
                     System.out.println("Listar ofertas de energia");
-                    MercadoEnergia mercadoEnergia = new MercadoEnergia();
-                    mercadoEnergia.adicionarOfertasTeste();
-                    mercadoEnergia.listarOfertas();
+                    adicionarUsuariosTestes();
+                    mercado.adicionarOfertasTeste();
+                    mercado.atualizarMercado();
+                    mercado.atualizarMercadoPrint();
                     break;
                 case 3:
                     listarUsuarios();
@@ -192,7 +194,7 @@ public class Usuario {
 
         Endereco enderecoUsuario = new Endereco(cidade, bairro, rua, numero, endereco);
 
-        System.out.println("Agora você é um usuário do SolCoop! Seja bem vindo, " + nome + "!\n");
+        System.out.println("\nAgora você é um usuário do SolCoop! Seja bem vindo, " + nome + "!\n");
 
         System.out.println("Escolha qual tipo de usuário você se identifica: ");
         System.out.println("1 - SunShare - Usuario que compartilha a energia gerada através de painéis solares.");
@@ -210,6 +212,7 @@ public class Usuario {
                 share4.entradaDados();
                 share4.verificarMercado();
                 listaUsuarios.add(share4);
+                mercado.addOferta(share4);
                 break;
 
             case 2:
@@ -218,12 +221,9 @@ public class Usuario {
                 seeker3.ColetandoDados();
                 seeker3.PrintValorFinal();
                 listaUsuarios.add(seeker3);
-                System.out.println();//Pular linha
-                Usuario.adicionarUsuariosTestes();
                 mercado.adicionarOfertasTeste();
-                mercado.listarOfertas();
+                mercado.atualizarMercado();
                 mercado.solicitarCompraEnergia();
-                Pagamento.processarPagamento(mercado, 1);
                 break;
                 
             case 3: //nao está funcionando os métodos
