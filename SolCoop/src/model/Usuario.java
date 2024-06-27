@@ -231,8 +231,8 @@ public class Usuario {
                 System.out.println("\nVocê escolheu ser um SunPartner!");
                 SunPartner partner1 = new SunPartner(tipoUsuario, nome, email, senha, numeroTelefone, enderecoUsuario, endereco, null, null);
                 partner1.solicitarInfoUsuario();
-                partner1.PrintInfoUsuario();
                 partner1.solicitarOrcamento();
+                partner1.listarFilaDeUsuarios();
                 listaUsuarios.add(partner1);
                 break;
             default:
