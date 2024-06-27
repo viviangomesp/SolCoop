@@ -105,10 +105,7 @@ public class MercadoEnergia {
         }
     }
 
-    /*
-     * metodo para solicitar id do vendedor e a quantidade de energia que deseja
-     * comprar
-     */
+    /* metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
     public void solicitarCompraEnergia() {
         Scanner sc = new Scanner(System.in);
         int idVendedor = 0;

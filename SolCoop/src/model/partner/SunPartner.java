@@ -2,6 +2,8 @@ package model.partner;
 
 import model.Endereco;
 import model.Usuario;
+import model.seeker.SunSeeker;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,18 +11,20 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class SunPartner extends Usuario{
+    public SunPartner(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco, String cep, List<Float> ultimasContas, List<String> empresasEscolhidas) {
+        super(idUsuario, nome, email, senha, numeroTelefone, endereco);
+        this.cep = cep;
+        this.ultimasContas = new ArrayList<>();
+        this.empresasEscolhidas = new ArrayList<>();
+    }
 
     private String cep;
     private List<Float> ultimasContas;
     private List<String> empresasEscolhidas;
     private static Queue<SunPartner> filaDeEspera = new LinkedList<>();
-    
-    public SunPartner(int idUsuario, String nome, String email, String senha, String numeroTelefone, Endereco endereco, String cep, List<Float> ultimasContas, List<String> empresasEscolhidas) {
-        super(idUsuario, nome, email, senha, numeroTelefone, endereco);
-        this.cep = cep;
-        this.ultimasContas = ultimasContas;
-        this.empresasEscolhidas = empresasEscolhidas;
-    }
+    public float mediaConsumo = 0;
+    public float margemErro = .15f; // 15% de margem de erro
+    public float consumoTotal = 0;
 
     public String getCep() {
         return cep;
@@ -53,65 +57,61 @@ public class SunPartner extends Usuario{
         empresasEscolhidas.add("4. DellaSol");
         empresasEscolhidas.add("5. Sun7");
     }
+    
+    /* Método para solicitar informações do usuário */
+    public void solicitarInfoUsuario() {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("\nAqui você poderá solicitar um orçamento de energia solar e ficar a espera de um parceiro SolCoop!");
+        System.out.println("Por favor, insira suas informações necessárias:");
+        System.out.println("Insira o valor em kWh (quilowatt-hora) das suas últimas 12 contas de energia: ");
+       
+        // Adiciona os valores das últimas contas de energia à lista
+            for (int i = 0; i < 12; i++) {
+                System.out.print("Conta [" + (i + 1) + "]: ");
+                float conta = scanner.nextFloat();
+                ultimasContas.add(conta);
+            }
+    }
 
+    /*Metodo print as informações do usuário */
+    public void PrintInfoUsuario(){
+        float consumoFinal = ConsumoTotalPartner();
+        System.out.printf("\nSua média de consumo nas últimas 12 contas de energia: %.2f kWh", mediaConsumo);
+        System.out.printf("\nMédia com margem de segurança de 15%%: %.2f kWh", consumoFinal);
+        System.out.println("\nA margem de segurança é importante para que o seu consumo seja sempre atendido com energia limpa.");
+
+        SunPartner sunPartner = new SunPartner(0, "", "", "", "", null, "", ultimasContas, new ArrayList<>());
+        filaDeEspera.add(sunPartner); // Adiciona o usuário à fila
+        escolhaEmpresa();
+    }
+
+    /* Método para solicitar orçamento */
     public void solicitarOrcamento() {
-        System.out.println("Informações do orçamento:");
+        float consumoFinal = ConsumoTotalPartner();
+        System.out.println("/// Informações do orçamento: ///");
         System.out.println("CEP: " + cep);
-        System.out.println("Quantidade de energia desejada (com margem de segurança de 15%): " + calcularMediaComMargemSeguranca(calcularMedia(ultimasContas)));
+        System.out.printf("Quantidade de energia desejada (com margem de segurança de 15%%) é %.2f Kwh: \n", consumoFinal);
         System.out.println("Empresas escolhidas: " + empresasEscolhidas);
         System.out.println("\nVamos encontrar um parceiro SolCoop para você. Entraremos em contato em breve!\n");
     }
 
-    public static List<Float> solicitarUltimasContas() {
-        List<Float> ultimasContas = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-
-        for (int i = 0; i < 12; i++) {
-            System.out.print("Conta [" + (i + 1) + "]: ");
-            ultimasContas.add(Float.parseFloat(scanner.nextLine()));
-        }
-
-        return ultimasContas;
-    }
-
-    public static float calcularMedia(List<Float> contas) {
+/* Método para calcular o consumo total de energia */
+    public float ConsumoTotalPartner() { 
+        /* Calcular a média de consumo */
         float soma = 0;
-        for (float conta : contas) {
-            soma += conta;
+        for (Float valorConta : ultimasContas) {
+            soma += valorConta;
         }
-        float media = soma / contas.size();
-        return media;
+        mediaConsumo = soma / ultimasContas.size();
+
+        /* Calcular o consumo total de energia (add margem de erro) */
+        consumoTotal = mediaConsumo + (mediaConsumo * margemErro);
+    
+        return consumoTotal;
     }
-
-    public static float calcularMediaComMargemSeguranca(float media) {
-        return media * 1.15f;
-    }
-
-    public static SunPartner solicitarInformacoesDoUsuario() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Aqui você pode solicitar um orçamento de energia solar e ficar a espera de um parceiro SolCoop!");
-        System.out.println("Insira o valor em kWh das suas últimas 12 contas de energia: ");
-        System.out.println("Por favor, insira suas informações:");
-
-        System.out.print("CEP: ");
-        String cep = scanner.nextLine();
-
-        List<Float> ultimasContas = solicitarUltimasContas();
-        float mediaContas = calcularMedia(ultimasContas);
-        float mediaComMargemSeguranca = calcularMediaComMargemSeguranca(mediaContas);
-
-        System.out.println("\nMédia das últimas 12 contas de energia: %.2f kWh" + mediaContas);
-        System.out.println("Média com margem de segurança de 15%: %.2f kWh" + mediaComMargemSeguranca);
-        System.out.println("A margem de segurança é importante para que o seu consumo seja sempre atendido com energia limpa.");
-
-        
-        SunPartner sunPartner = new SunPartner(0, "", "", "", "", null, cep, ultimasContas, new ArrayList<>());
-        filaDeEspera.add(sunPartner); // Adiciona o usuário à fila
-        escolhaEmpresa();
-        return sunPartner;
-    }
-
+    
+    /* Método para listar a fila de usuários */
     public static void listarFilaDeUsuarios() {
         System.out.println("\nFila de Usuários:");
         for (SunPartner sunPartner : filaDeEspera) {
@@ -119,6 +119,7 @@ public class SunPartner extends Usuario{
         }
     }
 
+    /* Método para listar as empresas parceiras */
     public static void listarEmpresas(SunPartner sunPartner) {
         System.out.println("\nConheça as empresas parceiras do SolCoop:");
         for (String empresa : sunPartner.getEmpresasEscolhidas()) {
@@ -126,7 +127,8 @@ public class SunPartner extends Usuario{
         }
         
     }
-
+    
+    /* Método para escolher uma empresa */
     public static void escolhaEmpresa (){
         Scanner sc = new Scanner(System.in);
         int escolhaDaEmpresa;
@@ -169,7 +171,9 @@ public class SunPartner extends Usuario{
     }
 
     public static void main(String[] args) {
-        SunPartner sunPartner = solicitarInformacoesDoUsuario();
+        SunPartner sunPartner = new SunPartner(0, "", "", "", "", null, "", new ArrayList<>(), new ArrayList<>());
+        sunPartner.solicitarInfoUsuario();
+        sunPartner.PrintInfoUsuario();
         sunPartner.solicitarOrcamento();
         listarFilaDeUsuarios();
     }

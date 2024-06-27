@@ -10,6 +10,7 @@ import model.seeker.SunSeeker;
 import model.share.MercadoEnergia;
 import model.share.Pagamento;
 import model.share.SunShare;
+import model.partner.SunPartner;
 public class Usuario {
 
     protected static int contadorId = 1;
@@ -228,9 +229,11 @@ public class Usuario {
                 
             case 3: //nao está funcionando os métodos
                 System.out.println("\nVocê escolheu ser um SunPartner!");
-                SunPartner sunPartner = new SunPartner(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco), "cep", SunPartner.solicitarUltimasContas(), new ArrayList<String>());
-                SunPartner.solicitarInformacoesDoUsuario();
-                listaUsuarios.add(sunPartner);
+                SunPartner partner1 = new SunPartner(tipoUsuario, nome, email, senha, numeroTelefone, enderecoUsuario, endereco, null, null);
+                partner1.solicitarInfoUsuario();
+                partner1.PrintInfoUsuario();
+                partner1.solicitarOrcamento();
+                listaUsuarios.add(partner1);
                 break;
             default:
                 System.out.println("Opção inválida!");

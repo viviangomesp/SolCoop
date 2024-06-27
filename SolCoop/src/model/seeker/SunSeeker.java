@@ -28,7 +28,6 @@ public class SunSeeker extends Usuario {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
     /* GET do id do usuario */
     public int getIdUsuario() {
         return idUsuario;
@@ -63,12 +62,22 @@ public class SunSeeker extends Usuario {
         return ultimasContas;
     }
 
+    /* SET MediaConsumo */
+    public void setMediaConsumo(float mediaConsumo) {
+        this.mediaConsumo = mediaConsumo;
+    }
+    /* GET MediaConsumo */
     public float getMediaConsumo() {
         return mediaConsumo;
     }
 
-    public void setMediaConsumo(float mediaConsumo) {
-        this.mediaConsumo = mediaConsumo;
+    /* SET ConsumoTotal */
+    public float setConsumoTotal(float consumoTotal) {
+        return this.consumoTotal = consumoTotal;
+    }
+    /* GET ConsumoTotal */
+    public float getConsumoTotal() {
+        return consumoTotal;
     }
 
     // *FIM DOS SET E GETS DO SunSeeker *//
@@ -81,6 +90,7 @@ public class SunSeeker extends Usuario {
         System.out.println("O valor do tributo será adicionado ao valor final a ser pago.");
         System.out.println("Informe o valor do tributo: ");
         setValorTributo(sc.nextFloat());
+        
         /* Pedindo as ultimas contas para realização dos cálculos  */
         System.out.println("\n/// Agora pediremos as ultimas 12 contas de energia para calcular sua media de consumo mensal ///");
         System.out.println("Informe consumo de energia em kWh (quilowatt-hora) presente nas contas de energia que sera usado para calcular sua media de consumo.\n");
