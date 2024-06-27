@@ -230,7 +230,6 @@ public class Usuario {
                 System.out.println("\nVocê escolheu ser um SunPartner!");
                 SunPartner sunPartner = new SunPartner(novoId, nome, email, senha, numeroTelefone, new Endereco(nome, email, senha, numeroTelefone, endereco), "cep", SunPartner.solicitarUltimasContas(), new ArrayList<String>());
                 SunPartner.solicitarInformacoesDoUsuario();
-                sunPartner.solicitarOrcamento();
                 listaUsuarios.add(sunPartner);
                 break;
             default:
