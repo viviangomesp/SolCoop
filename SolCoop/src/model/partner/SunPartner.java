@@ -53,10 +53,10 @@ public class SunPartner extends Usuario {
     public float ConsumoTotalPartner() {
         /* Calcular a média de consumo */
         float soma = 0;
-        for (Float valorConta : ultimasContas) {
+        for (Float valorConta : ultimasContas) { // Percorre a lista de contas e soma os valores
             soma += valorConta;
         }
-        mediaConsumo = soma / ultimasContas.size();
+        mediaConsumo = soma / ultimasContas.size(); // Faz a media dos valores de acordo com o tamanho da lista
 
         /* Calcular o consumo total de energia (add margem de erro) */
         consumoTotal = mediaConsumo + (mediaConsumo * margemErro);
@@ -93,7 +93,7 @@ public class SunPartner extends Usuario {
         System.out.println("///////////////////////////////");
 
         filaDeEspera.add(this); // Adiciona o usuário à fila
-        escolhaEmpresa(this);
+        escolhaEmpresa(this); // Chama o método para escolher uma empresa
     }
 
     /* Método para escolher uma empresa */
@@ -101,7 +101,7 @@ public class SunPartner extends Usuario {
         Scanner sc = new Scanner(System.in);
         int escolhaDaEmpresa;
 
-        listarEmpresas();
+        listarEmpresas(); // Chama o método para listar as empresas
 
         do {
             System.out.println("\nEscolha uma empresa para solicitar um orçamento: ");
@@ -109,7 +109,7 @@ public class SunPartner extends Usuario {
 
             switch (escolhaDaEmpresa) {
                 case 1:
-                    sunPartner.getEmpresaEscolhida().add("BRZ Solar");
+                    sunPartner.getEmpresaEscolhida().add("BRZ Solar"); // Adiciona a empresa escolhida à lista EmpresaEscolhida
                     System.out.println("Orçamento solicitado com sucesso para a empresa BRZ Solar!");
                     break;
                 case 2:
@@ -133,17 +133,18 @@ public class SunPartner extends Usuario {
                     escolhaDaEmpresa = sc.nextInt();
                     break;
             }
-        } while (escolhaDaEmpresa < 1 || escolhaDaEmpresa > 5);
+        } while (escolhaDaEmpresa < 1 || escolhaDaEmpresa > 5); // Enquanto a escolha for inválida, pede para escolher novamente
     }
 
     /* Método para listar a fila de usuários */
     public void listarFilaDeUsuarios() {
-        if (filaDeEspera == null || filaDeEspera.isEmpty()) {
+        if (filaDeEspera == null || filaDeEspera.isEmpty()) { // Verifica se a fila está vazia
             System.out.println("\nA fila de espera está vazia.");
             return;
         }
         System.out.println("\n//////// Fila de Usuários: ////////");
-        for (SunPartner sunPartner : filaDeEspera) {
+        for (SunPartner sunPartner : filaDeEspera) { // Percorre a fila de usuários em espera
+            // Verifica se a empresa escolhida é diferente de null, se sim, pega o nome da empresa, se não, imprime "Nenhuma empresa escolhida"
             String empresas = (sunPartner.getEmpresaEscolhida() != null) ? sunPartner.getEmpresaEscolhida().toString() : "Nenhuma empresa escolhida";
             System.out.println("\nNome: " + sunPartner.getNome() + " | CEP: " + sunPartner.getCep() + " | Empresas escolhidas: " + empresas);
         }
@@ -159,8 +160,8 @@ public class SunPartner extends Usuario {
         System.out.println("5. Sun7");
     }
 
-    /* Método para solicitar orçamento */
-    public void solicitarOrcamento() {
+    /* Método para imprimir o orçamento */
+    public void solicitarOrcamento() { 
         float consumoFinal = ConsumoTotalPartner();
         System.out.println();//Pular linha
         System.out.println("//////////////////////////////////");
@@ -169,12 +170,5 @@ public class SunPartner extends Usuario {
         System.out.printf("Quantidade de energia desejada (com margem de segurança de 15%%) é [ %.2f kWh ]: \n", consumoFinal);
         System.out.println("Empresa escolhida: " + empresaEscolhida);
         System.out.println("\nVamos encontrar um parceiro SolCoop para você. Entraremos em contato em breve!\n");
-    }
-
-    public static void main(String[] args) {
-        SunPartner sunPartner = new SunPartner(0, "", "", "", "", null, "", new ArrayList<>(), new ArrayList<>());
-        sunPartner.solicitarInfoUsuario();
-        sunPartner.solicitarOrcamento();
-        sunPartner.listarFilaDeUsuarios();
     }
 }

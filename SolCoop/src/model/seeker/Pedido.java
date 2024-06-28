@@ -1,7 +1,7 @@
 package model.seeker;
 
 import java.util.Date;
-
+import java.text.SimpleDateFormat;
 public class Pedido {
     private static int contador = 1;
     private int idPedido;
@@ -19,7 +19,7 @@ public class Pedido {
         this.nomeComprador = nomeComprador;
         this.idComprador = idComprador;
         this.data = new Date();
-        this.status = "Não concluído";
+        this.status = "Não concluído"; // Inicia sempre como não concluído
     }
 
     public static int getContador() {
@@ -86,7 +86,13 @@ public class Pedido {
         this.status = status;
     }
 
+    public String formatarData() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(data);
+    }
+    
     public void imprimirPedido(){
-        System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ")" + "| Data: " + data + " | Status: " + status);
+        Pedido pedido = new Pedido(nomeVendedor, idVendedor, nomeComprador, idComprador);
+        System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ")" + "| Data: " + formatarData() + " | Status: " + status);
     }
 }

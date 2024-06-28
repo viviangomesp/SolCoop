@@ -27,27 +27,22 @@ public class MercadoEnergia {
         ofertasEnergia.add(oferta);// Adiciona a oferta na lista de ofertas
     }
 
-    public void limparOferta (){
-        ofertasEnergia.clear();
-    }
-
     public void listarOfertas() {// Lista as ofertas de energia disponíveis
         System.out.println("Bem-vindo ao Mercado de Energia! Aqui você encontra as ofertas de energia disponíveis:");
         System.out.println("/// Mercado de Energia - Ofertas disponíveis ///");
 
-        for (OfertaEnergia oferta : ofertasEnergia) {
-            System.out.println("ID Usuario (SunShare): " + oferta.getIdUsuario() + " | Energia disponível: "
-                    + oferta.getEnergiaDisponivel() + " kWh");
+        for (OfertaEnergia oferta : ofertasEnergia) { // Percorre a lista de ofertas e imprime o ID do usuário e a energia disponível
+            System.out.println("ID Usuario (SunShare): " + oferta.getIdUsuario() + " | Energia disponível: " + oferta.getEnergiaDisponivel() + " kWh");
         }
     }
-
+    // Atualiza o mercado de energia
     public void atualizarMercado() {
         // Remover ofertas com energia disponível igual a zero
         ofertasEnergia.removeIf(oferta -> oferta.getEnergiaDisponivel() <= 0);
         // Remover pedidos concluídos
         pedidos.removeIf(pedido -> "Concluído".equals(pedido.getStatus()));
     }
-
+    // Atualiza o mercado de energia e IMPRIME as ofertas
     public void atualizarMercadoPrint() {
         // Remover ofertas com energia disponível igual a zero
         ofertasEnergia.removeIf(oferta -> oferta.getEnergiaDisponivel() <= 0);

@@ -24,10 +24,10 @@ public class Contrato {
             String resposta = sc.next().toUpperCase();
             if (resposta.equals("S")) { // Se for sim, sai do loop e retorna true
                 return true;
-            } else if (resposta.equals("N")) {
+            } else if (resposta.equals("N")) { //Se for não, sai do loop e retorna false
                 System.out.println("Não é possível realizar o pedido, pois você não concordou com o contrato.");
                 return false;
-            } else {
+            } else { // Se for outra resposta, pede para digitar novamente
                 System.out.println("Resposta inválida. Por favor, digite S para sim ou N para não.");
             }
         }

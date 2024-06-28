@@ -78,4 +78,7 @@ public class Endereco {
         setCep(sc.nextLine());
     }
 
+    public String formatarEndereco() {
+        return rua + ", " + numero + ", " + bairro + ", " + cidade + " - CEP: " + cep;
+    }
 }

@@ -104,11 +104,11 @@ public class Usuario {
         listaUsuarios.add(share3);
     }
     
-
     public static void listarUsuarios() {
         System.out.println("\nListar todos usuarios do SolCoop: ");
         for (Usuario usuario : listaUsuarios) {
-            System.out.println("ID: " + usuario.getIdUsuario() + " | Nome: " + usuario.getNome() + " | Email: " + usuario.getEmail() + " | Telefone: " + usuario.getNumeroTelefone() + " | Endereço: " + usuario.getEndereco());
+            System.out.println("ID: " + usuario.getIdUsuario() + " | Nome: " + usuario.getNome() + " | Email: " + usuario.getEmail() + " | Telefone: " + usuario.getNumeroTelefone() + " | Endereço: " + usuario.getEndereco().formatarEndereco());
+
         }
     }
 
@@ -118,10 +118,11 @@ public class Usuario {
 
         while (true) {
             System.out.println("\nBem vindo ao SolCoop! Aqui você pode compartilhar e comprar energia solar!");
-            System.out.println("1 - Registar novo usuario");
+            System.out.println("1 - Registar novo usuário");
             System.out.println("2 - Listar ofertas de energia");
-            System.out.println("3 - Listar todos usuarios");
-            System.out.println("4 - Sair");
+            System.out.println("3 - Listar todos usuários");
+            System.out.println("4 - Listar pedidos de energia");
+            System.out.println("5 - Sair");
             opcao = sc.nextInt();
 
             switch (opcao) {
@@ -140,11 +141,15 @@ public class Usuario {
                     listarUsuarios();
                     break;
                 case 4:
+                    System.out.println("//// Lista de pedidos ////");
+                    mercado.listarPedidos();
+                    break;
+                case 5:
                     System.out.println("Saindo do SolCoop... Até mais!");
-                    return;
+                    break;
                 default:
                     System.out.println("Opção inválida!");
-                    System.out.println("Digite uma opção válida (1, 2 ou 3)");
+                    System.out.println("Digite uma opção válida (1, 2, 3 ou 4)");
                     break;
             }
         }
@@ -159,7 +164,7 @@ public class Usuario {
         return null;//Se não encontrar o usuário, retorna null
     }
 
-    public static void registarNovoUsuario() {//ajustar endereco
+    public static void registarNovoUsuario() {
         Scanner sc = new Scanner(System.in);
         int tipoUsuario;
         int novoId = contadorId++; //Gera um novo ID para o usuário
@@ -227,7 +232,7 @@ public class Usuario {
                 mercado.solicitarCompraEnergia();
                 break;
                 
-            case 3: //nao está funcionando os métodos
+            case 3: 
                 System.out.println("\nVocê escolheu ser um SunPartner!");
                 SunPartner partner1 = new SunPartner(tipoUsuario, nome, email, senha, numeroTelefone, enderecoUsuario, endereco, null, null);
                 partner1.solicitarInfoUsuario();
