@@ -17,6 +17,14 @@ public class MercadoEnergia {
     private List<Pedido> pedidos; // Lista de pedidos de energia
     private boolean ofertasTesteAdd = false;
 
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
     public MercadoEnergia() {// Inicializa as listas de ofertas e pedidos
         this.ofertasEnergia = new ArrayList<>();
         this.pedidos = new ArrayList<>();
@@ -35,19 +43,17 @@ public class MercadoEnergia {
             System.out.println("ID Usuario (SunShare): " + oferta.getIdUsuario() + " | Energia disponível: " + oferta.getEnergiaDisponivel() + " kWh");
         }
     }
+
     // Atualiza o mercado de energia
     public void atualizarMercado() {
-        // Remover ofertas com energia disponível igual a zero
+        // Remove as ofertas com energia disponível igual a zero
         ofertasEnergia.removeIf(oferta -> oferta.getEnergiaDisponivel() <= 0);
-        // Remover pedidos concluídos
-        pedidos.removeIf(pedido -> "Concluído".equals(pedido.getStatus()));
     }
+
     // Atualiza o mercado de energia e IMPRIME as ofertas
     public void atualizarMercadoPrint() {
         // Remover ofertas com energia disponível igual a zero
-        ofertasEnergia.removeIf(oferta -> oferta.getEnergiaDisponivel() <= 0);
-        // Remover pedidos concluídos
-        pedidos.removeIf(pedido -> "Concluído".equals(pedido.getStatus()));
+        ofertasEnergia.removeIf(oferta -> oferta.getEnergiaDisponivel() <= 0);//
         listarOfertas();
     }
 
@@ -69,21 +75,17 @@ public class MercadoEnergia {
         ofertasEnergia.add(oferta2);
         ofertasEnergia.add(oferta3);
 
-        ofertasTesteAdd = true;
+        ofertasTesteAdd = true;//Marca que a oferta teste foi inserida
     }
 
     public boolean comprarEnergia(int idOferta, float quantidade) {
         for (OfertaEnergia oferta : ofertasEnergia) {// Percorre a lista de ofertas, se a oferta for encontrada e a quantidade de energia disponível for suficiente
             if (oferta.getIdUsuario() == idOferta && oferta.getEnergiaDisponivel() >= quantidade) {
                 oferta.setEnergiaDisponivel(oferta.getEnergiaDisponivel() - quantidade);
-                // Se a energia disponível for 0, remove a oferta
-                if (oferta.getEnergiaDisponivel() == 0) {
-                    ofertasEnergia.remove(oferta);
-                }
-                return true;
+                return true;// Retorna true se a compra for realizada com sucesso
             }
         }
-        return false;
+        return false;// Retorna false se a compra não for realizada
     }
 
     public void criarPedido(int idVendedor, int idComprador, String nomeComprador) {
@@ -96,11 +98,11 @@ public class MercadoEnergia {
             System.out.println("\nPedido criado com sucesso!");
             pedido.imprimirPedido();
         } else {
-                System.out.println("ERRO: Usuário não encontrado.\n");
+            System.out.println("ERRO: Usuário não encontrado.\n");
         }
     }
 
-    /* metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
+    /* Metodo para solicitar id do vendedor e a quantidade de energia que deseja comprar */
     public void solicitarCompraEnergia() {
         Scanner sc = new Scanner(System.in);
         int idVendedor = 0;
@@ -117,17 +119,17 @@ public class MercadoEnergia {
             Usuario vendedor = Usuario.getUsuarioById(idVendedor);
             if (vendedor == null) {
                 System.out.println("ERRO: Vendedor não encontrado.\n");
-                continue;
+                continue;// Volta para o início do loop
             }
 
             if (quantidade <= 0) {
                 System.out.println("ERRO: Quantidade inválida.\n");
-                continue;
+                continue;// Volta para o início do loop
             }
 
-            if (!comprarEnergia(idVendedor, quantidade)) {
+            if (!comprarEnergia(idVendedor, quantidade)) {// Se a compra não for realizada
                 System.out.println("Erro ao realizar a compra: Oferta não encontrada ou quantidade insuficiente.");
-                continue;
+                continue;// Volta para o início do loop
             }
 
             compraValida = true;
@@ -136,13 +138,14 @@ public class MercadoEnergia {
             System.out.println("\nDeseja continuar a compra (S/N)?\nA seguir será exibido o contrato de compra de energia. É necessário aceitar para finalizar o pedido.");
             String continuarCompra = sc.next();
 
-            if (continuarCompra.equalsIgnoreCase("S")) {
+            if (continuarCompra.equalsIgnoreCase("S")) {//Se o usuário deseja continuar a compra
                 Contrato contrato = new Contrato();
                 boolean aceitouContrato = contrato.termosContrato();
                 if (!aceitouContrato) {
                     System.out.println("Contrato não aceito. Compra cancelada.");
                     System.out.println("Voltando para o menu principal...\n");
                 } else {
+                    int idComprador = Usuario.getUsuarioById(1).getIdUsuario();
                     criarPedido(idVendedor, Usuario.getUsuarioById(idVendedor).getIdUsuario(), "");
                     Pagamento.processarPagamento(this, pedidos.get(pedidos.size() - 1).getIdPedido());
                 }
@@ -152,27 +155,22 @@ public class MercadoEnergia {
         }
     }
 
+    
+
     public Pedido getPedidoById(int idPedido) {// Procura um pedido pelo ID e retorna o pedido
-        for (Pedido pedido : pedidos) {
-            if (pedido.getIdPedido() == idPedido) {
+        for (Pedido pedido : pedidos) {// Percorre a lista de pedidos
+            if (pedido.getIdPedido() == idPedido) {//Se encontrar o pedido que corresponde ao ID procurado, retorna o pedido
                 return pedido;
             }
         }
         return null;
     }
 
-    public void listarPedidos() {// Metodo para listar os pedidos
+    /*Metodo para listar os pedidos */
+    public void listarPedidos() {
         System.out.println("/// Mercado de Energia - Pedidos de energia ///");
-        for (Pedido pedido : pedidos) {
+        for (Pedido pedido : pedidos) {// Percorre a lista de pedidos e imprime os dados do pedido
             pedido.imprimirPedido();
         }
-    }
-
-    public static void main(String[] args) {
-        MercadoEnergia mercadoEnergia = new MercadoEnergia();
-        Usuario.adicionarUsuariosTestes();
-        mercadoEnergia.adicionarOfertasTeste();
-        mercadoEnergia.solicitarCompraEnergia();
-        mercadoEnergia.atualizarMercado();
     }
 }

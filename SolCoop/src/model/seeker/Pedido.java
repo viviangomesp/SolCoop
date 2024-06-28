@@ -95,4 +95,8 @@ public class Pedido {
         Pedido pedido = new Pedido(nomeVendedor, idVendedor, nomeComprador, idComprador);
         System.out.println("ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ")" + "| Data: " + formatarData() + " | Status: " + status);
     }
+
+    public String formatarPedido (){
+        return "ID Pedido: " + idPedido + " | Vendedor: " + nomeVendedor + " (ID: " + idVendedor + ")" + "| Data: " + formatarData() + " | Status: " + status;
+    }
 }

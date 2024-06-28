@@ -78,7 +78,7 @@ public class SunSeeker extends Usuario {
     public float setConsumoTotal(float consumoTotal) {
         return this.consumoTotal = consumoTotal;
     }
-   
+
     /* GET ConsumoTotal */
     public float getConsumoTotal() {
         return consumoTotal;

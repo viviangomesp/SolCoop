@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.partner.SunPartner;
-import model.seeker.Pedido;
 import model.seeker.SunSeeker;
 import model.share.MercadoEnergia;
 import model.share.Pagamento;
 import model.share.SunShare;
-import model.partner.SunPartner;
+
 public class Usuario {
 
     protected static int contadorId = 1;
@@ -90,7 +89,7 @@ public class Usuario {
         Usuario.listaUsuarios = listaUsuarios;
     }
 
-    public static void adicionarUsuariosTestes() {
+    public static void adicionarUsuariosTestes() {//Adicinando usuários de teste
         SunSeeker seeker1 = new SunSeeker(contadorId++, "Pedro", "pedroteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade1", "Bairro1", "Rua1", "1", "11111-111"));
         SunShare share1 = new SunShare(contadorId++, "Felipe", "felipeteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade2", "Bairro2", "Rua2", "2", "22222-222"), new MercadoEnergia());
         SunSeeker seeker2 = new SunSeeker(contadorId++, "Emily", "emilyteste@gmail.com", "teste123", "71999999999", new Endereco("Cidade3", "Bairro3", "Rua3", "3", "33333-333"));
@@ -104,7 +103,7 @@ public class Usuario {
         listaUsuarios.add(share3);
     }
     
-    public static void listarUsuarios() {
+    public static void listarUsuarios() {//Listar todos os usuários do sistema
         System.out.println("\nListar todos usuarios do SolCoop: ");
         for (Usuario usuario : listaUsuarios) {
             System.out.println("ID: " + usuario.getIdUsuario() + " | Nome: " + usuario.getNome() + " | Email: " + usuario.getEmail() + " | Telefone: " + usuario.getNumeroTelefone() + " | Endereço: " + usuario.getEndereco().formatarEndereco());
@@ -246,9 +245,5 @@ public class Usuario {
                 break;
         }
 
-    }
-    public static void main(String[] args) {
-        adicionarUsuariosTestes();
-        menu();
     }
 }

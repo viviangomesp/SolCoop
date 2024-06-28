@@ -44,7 +44,7 @@ public class SunShare extends Usuario {
     
     public void entradaDados () { //Pede ao usuário para inserir os dados
         Scanner sc = new Scanner(System.in);
-        boolean compartilharEnergia = false;//variavel local para capturar se o usuario já compartilha energia
+        boolean compartilharEnergia = false;//Variavel local para capturar se o usuario já compartilha energia
 
         System.out.println("\n/// Cadastro de novo item no Mercado de Energia ///");
 
@@ -53,9 +53,11 @@ public class SunShare extends Usuario {
 
         System.out.println("\nVocê já compartilha eneriga? (S/N): "); //Se o usuário já compartilha energia, ele pode informar a quantidade
         compartilharEnergia = sc.next().equalsIgnoreCase("S");
+
         if (compartilharEnergia) {
             System.out.println("Digite a energia que você compartilha (em kWh): ");
             setEnergiaCompartilhada(energiaCompartilhada = sc.nextFloat());
+
         } else { //Se o usuário não compartilha energia, a energia compartilhada é 0
             System.out.println("Você não compartilha energia.");
             setEnergiaCompartilhada(energiaCompartilhada = 0);
@@ -101,13 +103,5 @@ public class SunShare extends Usuario {
         float consumoSeeker = seeker.getMediaConsumo();
         System.out.println("O preço de venda da energia é: " + consumoSeeker);
     }
-
-    public static void main(String[] args) {
-        MercadoEnergia mercado = new MercadoEnergia();
-        SunShare share1 = new SunShare(0, "nome", "email", "senha", "numeroTelefone", new Endereco("cidade", "bairro", "rua", "numero", "cep"), mercado);
-        share1.entradaDados();
-        share1.verificarMercado();
-    }
-
 }
 
